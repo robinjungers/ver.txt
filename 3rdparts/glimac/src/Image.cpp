@@ -28,8 +28,6 @@ std::unique_ptr<Image> loadImage(const FilePath& filepath) {
     return pImage;
 }
 
-// void ldImage() {}
-
 /*std::unordered_map<FilePath, std::unique_ptr<Image>> ImageManager::m_ImageMap;
 
 const Image* ImageManager::loadImage(const FilePath& filepath) {
