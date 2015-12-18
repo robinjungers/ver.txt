@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <glimac/glm.hpp>
 #include <glimac/common.hpp>
+#include "Texture.hpp"
 
 class Object3D {
 
