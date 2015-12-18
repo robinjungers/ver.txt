@@ -9,7 +9,7 @@ FreeFlyCamera::FreeFlyCamera() {
 	m_currentPosition.phi = 90;
 	m_currentPosition.theta = 0.0;
 
-	m_nbFramesPerSegment = 300;
+	m_nbFramesPerSegment = 3000;
 	m_currentFrame = 0;
 	m_currentSegment = 0;
 
@@ -96,7 +96,11 @@ void FreeFlyCamera::moveOnPath() {
 		computePosition();
 		updateFrameCounter();
 
-	}
+	} else if ( m_controlPoints.size() == 1 ) {
+
+        m_currentPosition = m_controlPoints[0];
+
+    }
 
 }
 

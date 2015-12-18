@@ -1,7 +1,7 @@
 #include "tools.hpp"
 
-float map(float value, float low1, float high1, float low2, float high2) {
+float map(float value, float inMin, float inMax, float outMin, float outMax) {
 
-	return (low2 + (high2 - low2) * (value - low1)) / (high1 - low1);
+	return outMin + (outMax - outMin) * ((value - inMin) / (inMax - inMin));
 
 }

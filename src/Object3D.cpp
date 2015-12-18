@@ -9,47 +9,47 @@ Object3D::Object3D() {
 }
 
 void Object3D::initVertices() {
+
   //Création d'un VBO
-  glGenBuffers(1, &m_vbo);
+  glGenBuffers( 1, &m_vbo );
 
   //Bindind du vbo sur la cible
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+  glBindBuffer( GL_ARRAY_BUFFER, m_vbo );
 
   //Puis on envois les données à la CG
-  glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(ShapeVertex), m_vertices.data(), GL_STATIC_DRAW);
+  glBufferData( GL_ARRAY_BUFFER, m_vertices.size() * sizeof( ShapeVertex ), m_vertices.data(), GL_STATIC_DRAW );
 
   //Débindind du vbo de la cible pour éviter de le remodifier
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
   //Création du VAO
-  glGenVertexArrays(1, &m_vao);
+  glGenVertexArrays( 1, &m_vao );
 
   //Binding du vao (un seul à la fois)
-  glBindVertexArray(m_vao);
+  glBindVertexArray( m_vao );
 
   //Dire à OpenGL qu'on utilise le VAO
   const GLuint VERTEX_ATTR_POSITION = 0;
   const GLuint VERTEX_ATTR_NORMAL = 1;
   const GLuint VERTEX_ATTR_TEXCOORDS = 2;
-  glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-  glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-  glEnableVertexAttribArray(VERTEX_ATTR_TEXCOORDS);
+  glEnableVertexAttribArray( VERTEX_ATTR_POSITION );
+  glEnableVertexAttribArray( VERTEX_ATTR_NORMAL );
+  glEnableVertexAttribArray( VERTEX_ATTR_TEXCOORDS );
 
   //Indiquer à OpenGL où trouver les sommets
   //Bindind du vbo sur la cible
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+  glBindBuffer( GL_ARRAY_BUFFER, m_vbo );
   //Spécification du format de l'attribut de sommet position
-  glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid*)offsetof(ShapeVertex, position));
-  glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid*)offsetof(ShapeVertex, normal));
-  glVertexAttribPointer(VERTEX_ATTR_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid*)offsetof(ShapeVertex, texCoords));
+  glVertexAttribPointer( VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof( ShapeVertex ), ( const GLvoid* ) offsetof( ShapeVertex, position ) );
+  glVertexAttribPointer( VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof( ShapeVertex ), ( const GLvoid* ) offsetof( ShapeVertex, normal ) );
+  glVertexAttribPointer( VERTEX_ATTR_TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof( ShapeVertex ), ( const GLvoid* ) offsetof( ShapeVertex, texCoords ) );
   //Débindind du vbo de la cible pour éviter de le remodifier
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
   //Débindind du vao de la cible pour éviter de le remodifier
-  glBindVertexArray(0);
+  glBindVertexArray( 0 );
 
 }
-
 
 
 
@@ -70,7 +70,6 @@ void Object3D::setTexture( Texture texture ) {
   m_texture = texture;
 }*/
 
-
 vec3 Object3D::getPosition() {
   return m_position;
 }
@@ -84,6 +83,7 @@ vec3 Object3D::getScale() {
 
 
 void Object3D::draw() {
+  
   // Binding
   glBindVertexArray( m_vao );
 
@@ -95,4 +95,5 @@ void Object3D::draw() {
 
   // Debinding
   glBindVertexArray(0);
+
 }

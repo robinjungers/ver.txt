@@ -1,15 +1,13 @@
 #pragma once
 
 #include <vector>
-#include <cstddef>
-#include <GL/glew.h>
 #include <glimac/glm.hpp>
 #include <glimac/common.hpp>
 #include "Texture.hpp"
 
 class Object3D {
 
-  private:
+  protected:
     //Material m_material;
     //Texture m_texture;
     GLuint m_vbo;

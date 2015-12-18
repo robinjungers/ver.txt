@@ -9,7 +9,7 @@ TrackballCamera::TrackballCamera() {
     m_currentPosition.angleX = 0.0;
     m_currentPosition.angleY = 0.0;
 
-    m_nbFramesPerSegment = 300;
+    m_nbFramesPerSegment = 3000;
     m_currentFrame = 0;
     m_currentSegment = 0;
 
@@ -74,6 +74,10 @@ void TrackballCamera::moveOnPath() {
 
         computePosition();
         updateFrameCounter();
+
+    } else if ( m_controlPoints.size() == 1 ) {
+
+        m_currentPosition = m_controlPoints[0];
 
     }
 
