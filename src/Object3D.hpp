@@ -4,6 +4,7 @@
 #include <glimac/glm.hpp>
 #include <glimac/common.hpp>
 #include "Texture.hpp"
+#include "Material.hpp"
 
 class Object3D {
 

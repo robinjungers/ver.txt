@@ -14,10 +14,13 @@
 #include "Quad.hpp" // Pour test
 #include "TrackballCamera.hpp"
 #include "Sphere.hpp"
+#include "Texture.hpp"
+#include "Light.hpp"
 
 
 
 using namespace glimac;
+using namespace glm;
 
 
 int main( int argc, char** argv ) {
@@ -49,11 +52,11 @@ int main( int argc, char** argv ) {
     // Z-buffer
     glEnable(GL_DEPTH_TEST);
 
-    // Test object
+    // Test objects
     Quad monQuad;
 
     // Test camera
-    TrackballCamera maCamera;
+    TrackballCamera maCamera(6000);
     TrackballPosition maPosition;
     maPosition.distance = 5.0;
     maPosition.angleX = 45.0;
@@ -63,14 +66,33 @@ int main( int argc, char** argv ) {
     maPosition.angleX = 45.0;
     maPosition.angleY = 180.0;
     maCamera.addControlPoint( maPosition );
+    maPosition.distance = 5.0;
+    maPosition.angleX = 45.0;
+    maPosition.angleY = 360.0;
+    maCamera.addControlPoint( maPosition );
 
     // Matrices de projection...
     GLint uMVPMatrix = glGetUniformLocation( program.getGLId(), "uMVPMatrix" );
     GLint uMVMatrix = glGetUniformLocation( program.getGLId(), "uMVMatrix" );
     GLint uNormalMatrix = glGetUniformLocation( program.getGLId(), "uNormalMatrix" );
-    glm::mat4 ProjMatrix = glm::perspective( glm::radians(70.f), 800.f/600.f, 0.1f, 100.f );
-    glm::mat4 MVMatrix = maCamera.getViewMatrix();
-    glm::mat4 NormalMatrix = glm::transpose( glm::inverse( MVMatrix ) );
+    mat4 ProjMatrix = perspective( radians(70.f), 800.f/600.f, 0.1f, 100.f );
+    mat4 MVMatrix;
+    mat4 NormalMatrix;
+
+    // Test texture
+    Texture maTexture( "lol.jpg", program );
+
+    // Test light
+    PointLight maLight( vec3( 0.0, 5.0, -5.0 ) );
+    maLight.setIntensity( vec3( 25.0, 25.0, 25.0 ) );
+    maLight.getUniformLocations( program );
+
+    // Test material
+    Material monMaterial( vec3( 1.0, 1.0, 1.0 ),
+                          vec3( 1.0, 1.0, 1.0 ),
+                          30.0 );
+    monMaterial.getUniformLocations( program );
+    monMaterial.sendUniformValues();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,25 +110,35 @@ int main( int argc, char** argv ) {
     	while( windowManager.pollEvent( e ) ) {
     	if( e.type == SDL_QUIT )
 				done = true;
-    }
+        }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////// Pour tests
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-		// Camera
-		maCamera.moveOnPath();
-		MVMatrix = maCamera.getViewMatrix();
+        //////////////////////////////////////////////////////////////////////////////////////////////////// Pour tests
+    	
+        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-        glUniformMatrix4fv( uMVPMatrix, 1, GL_FALSE, glm::value_ptr( ProjMatrix * MVMatrix ) );
-        glUniformMatrix4fv( uMVMatrix, 1, GL_FALSE, glm::value_ptr( MVMatrix ) );
-        glUniformMatrix4fv( uNormalMatrix, 1, GL_FALSE, glm::value_ptr( NormalMatrix ) );
+    	// Camera
+    	maCamera.moveOnPath();
+    	MVMatrix = maCamera.getViewMatrix();
+        NormalMatrix = transpose( inverse( MVMatrix ) );
+
+        glUniformMatrix4fv( uMVPMatrix, 1, GL_FALSE, value_ptr( ProjMatrix * MVMatrix ) );
+        glUniformMatrix4fv( uMVMatrix, 1, GL_FALSE, value_ptr( MVMatrix ) );
+        glUniformMatrix4fv( uNormalMatrix, 1, GL_FALSE, value_ptr( NormalMatrix ) );
+
+        maLight.sendUniformValues( MVMatrix );
+
+        maTexture.bindTexture();
 
         monQuad.draw();
-				mySphere.draw();
+        // mySphere.draw();
+
+        maTexture.debindTexture();
 
         windowManager.swapBuffers();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 	}
 

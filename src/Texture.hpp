@@ -14,12 +14,13 @@ using namespace std;
 
 class Texture {
 
-	private:
-		GLuint m_texture;
-		GLint uTexture;
+  private:
+	GLuint m_texture;
+	GLint uTexture;
 
-	public:
-		Texture(string fileTexture, Program &program);
-		void BindTexture();
-		void DebindTexture();
+  public:
+	Texture( string fileTexture, Program &program );
+	void bindTexture();
+	void debindTexture();
+
 };
