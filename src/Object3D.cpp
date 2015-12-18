@@ -83,7 +83,7 @@ vec3 Object3D::getScale() {
 
 
 void Object3D::draw() {
-  
+
   // Binding
   glBindVertexArray( m_vao );
 

@@ -16,12 +16,14 @@ class Object3D {
     glm::vec3 m_position;
     glm::vec3 m_rotation;
     glm::vec3 m_scale;
+
+  protected:
     std::vector<glimac::ShapeVertex> m_vertices;
+
+    void initVertices();
 
   public:
     Object3D();
-    virtual void buildVertices() = 0;
-    void initVertices();
 
     void setPosition( glm::vec3 position );
     void setRotation( glm::vec3 rotation );
@@ -32,8 +34,6 @@ class Object3D {
     glm::vec3 getPosition();
     glm::vec3 getRotation();
     glm::vec3 getScale();
-
-    void translate();
 
     virtual void transition() = 0;
     virtual void animation() = 0;

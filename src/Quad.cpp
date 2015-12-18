@@ -1,8 +1,14 @@
 #include "Quad.hpp"
+
 #include <vector>
 
 using namespace glimac;
 using namespace glm;
+
+Quad::Quad() {
+	buildVertices();
+	initVertices();
+}
 
 void Quad::buildVertices() {
 
@@ -48,12 +54,12 @@ void Quad::buildVertices() {
 
 void Quad::transition() {
 
-	
+
 
 }
 
 void Quad::animation() {
 
-	
+
 
 }

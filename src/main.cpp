@@ -13,6 +13,8 @@
 
 #include "Quad.hpp" // Pour test
 #include "TrackballCamera.hpp"
+#include "Sphere.hpp"
+
 
 
 using namespace glimac;
@@ -49,8 +51,6 @@ int main( int argc, char** argv ) {
 
     // Test object
     Quad monQuad;
-    monQuad.buildVertices();
-    monQuad.initVertices();
 
     // Test camera
     TrackballCamera maCamera;
@@ -75,22 +75,22 @@ int main( int argc, char** argv ) {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+	glEnable(GL_DEPTH_TEST);
+
+	// Graphic objects
+	Sphere mySphere;
+
 	// Display loop
 	bool done = false;
 	while( !done ) {
 
 		SDL_Event e;
     	while( windowManager.pollEvent( e ) ) {
-      		if( e.type == SDL_QUIT )
+    	if( e.type == SDL_QUIT )
 				done = true;
-    	}
+    }
 
-		//////////////////////////////
-		/*       DESSINER ICI       */
-		//////////////////////////////
-
-
-    	//////////////////////////////////////////////////////////////////////////////////////////////////// Pour tests
+    //////////////////////////////////////////////////////////////////////////////////////////////////// Pour tests
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		// Camera
@@ -102,11 +102,11 @@ int main( int argc, char** argv ) {
         glUniformMatrix4fv( uNormalMatrix, 1, GL_FALSE, glm::value_ptr( NormalMatrix ) );
 
         monQuad.draw();
+				mySphere.draw();
 
         windowManager.swapBuffers();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 	}
 
