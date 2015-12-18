@@ -36,7 +36,7 @@ endif()
 add_subdirectory(3rdparts/glimac)
 
 
-file(GLOB SRC_FILES src/*.cpp src/*.hpp)
+file(GLOB SRC_FILES src/*.cpp src/*.hpp shaders/*.glsl)
 
 	
 add_executable(game ${SRC_FILES})
