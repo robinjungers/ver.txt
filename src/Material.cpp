@@ -8,8 +8,8 @@ m_diffuseColor( diffuseColor ), m_specularColor( specularColor ), m_shininess( s
 
 void Material::getUniformLocations( Program &program ) {
 	m_uKd = glGetUniformLocation( program.getGLId(), "uKd" );
-    m_uKs = glGetUniformLocation( program.getGLId(), "uKs" );
-    m_uShininess = glGetUniformLocation( program.getGLId(), "uShininess" );
+  m_uKs = glGetUniformLocation( program.getGLId(), "uKs" );
+  m_uShininess = glGetUniformLocation( program.getGLId(), "uShininess" );
 }
 
 void Material::sendUniformValues() {

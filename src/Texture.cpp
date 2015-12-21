@@ -3,10 +3,10 @@
 using namespace glimac;
 using namespace glm;
 
-Texture::Texture( string fileTexture, Program &program ) {
-	
-    unique_ptr<Image> Texture = loadImage( "assets/" + fileTexture );
-	
+Texture::Texture( string fileTexture ) {
+
+    unique_ptr<Image> Texture = loadImage( "assets/textures/" + fileTexture );
+
     if( Texture == NULL )
         cerr << "Can't load texture " << fileTexture << " \n" << endl;
 
@@ -17,8 +17,10 @@ Texture::Texture( string fileTexture, Program &program ) {
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glBindTexture( GL_TEXTURE_2D, 0 );
 
-    uTexture = glGetUniformLocation( program.getGLId(), "uTexture" );
-    
+}
+
+void Texture::getUniformLocations( Program &program ) {
+	uTexture = glGetUniformLocation( program.getGLId(), "uTexture" );
 }
 
 void Texture::bindTexture() {

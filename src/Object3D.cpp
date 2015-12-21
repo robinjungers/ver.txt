@@ -1,11 +1,15 @@
 #include "Object3D.hpp"
 
+#include <iostream>
+
 using namespace std;
 using namespace glimac;
 using namespace glm;
 
 Object3D::Object3D() {
   m_position = vec3( 0.0, 0.0, 0.0 );
+  m_rotation = vec3( 0.0, 0.0, 0.0 );
+  m_scale = vec3( 0.0, 0.0, 0.0 );
 }
 
 void Object3D::initVertices() {
@@ -62,13 +66,20 @@ void Object3D::setRotation( vec3 rotation ) {
 void Object3D::setScale( vec3 scale ) {
   m_scale = scale;
 }
-/*void Object3D::setMaterial( Material material ) {
-  m_material = material;
-  m_material.getUniformLocations();
+void Object3D::setMaterial( vec3 diffuseColor, vec3 specularColor, int shininess ) {
+  m_material = new Material( diffuseColor, specularColor, shininess );
 }
-void Object3D::setTexture( Texture texture ) {
-  m_texture = texture;
-}*/
+void Object3D::setTexture( string fileTexture ) {
+  m_texture = new Texture( fileTexture );
+}
+
+
+void Object3D::getUniformLocations( Program &program ) {
+  m_material->getUniformLocations( program );
+  m_texture->getUniformLocations( program );
+
+}
+
 
 vec3 Object3D::getPosition() {
   return m_position;
@@ -86,14 +97,19 @@ void Object3D::draw() {
 
   // Binding
   glBindVertexArray( m_vao );
+  if ( m_texture != NULL )
+    m_texture->bindTexture();
 
   // Variables uniformes
-  //m_material.sendUniformLocation();
+  if ( m_material != NULL )
+    m_material->sendUniformValues();
 
   // Dessin
   glDrawArrays( GL_TRIANGLES, 0, m_vertices.size() );
 
   // Debinding
+  if ( m_texture != NULL )
+    m_texture->debindTexture();
   glBindVertexArray(0);
 
 }

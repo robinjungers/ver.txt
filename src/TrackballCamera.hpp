@@ -24,6 +24,7 @@ private:
 public:
 	TrackballCamera();
 	TrackballCamera( unsigned nbFramesPerSegment );
+	~TrackballCamera() {};
 
 	void addControlPoint( TrackballPosition controlPoint );
 

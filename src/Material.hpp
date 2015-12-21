@@ -19,8 +19,10 @@ class Material {
 
   public:
 	Material( vec3 diffuseColor, vec3 specularColor, int shininess );
-	void getUniformLocations( Program &program );
+
+  void getUniformLocations( Program &program );
 	void sendUniformValues();
+
 	void setDiffuseColor( vec3 diffuseColor );
 	void setSpecularColor( vec3 specularColor );
 	void setShininess( int shininess );

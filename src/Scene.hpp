@@ -1,0 +1,52 @@
+#pragma once
+
+#include <vector>
+#include <GL/glew.h>
+#include <glimac/glm.hpp>
+#include <glimac/Program.hpp>
+#include <glimac/FilePath.hpp>
+
+#include "Object3D.hpp"
+#include "Light.hpp"
+#include "TrackballCamera.hpp"
+#include "FreeFlyCamera.hpp"
+
+
+class Scene {
+
+  private:
+    string m_name;
+    Program m_program;
+
+    GLint m_uMVPMatrix;
+    GLint m_uMVMatrix;
+    GLint m_uNormalMatrix;
+
+    glm::mat4 m_ProjMatrix;
+    glm::mat4 m_MVMatrix;
+    glm::mat4 m_NormalMatrix;
+
+    std::vector<Object3D*> m_objects3D;
+    std::vector<Light*> m_lights;
+
+    Camera * m_camera;
+
+  public:
+    Scene( string name, FilePath vsPath, FilePath fsPath );
+    ~Scene();
+
+    void setAmbientColor( glm::vec3 color );
+    void setCamera( Camera *camera );
+
+    void addObject3D( Object3D *object );
+    void addLight( Light *light );
+
+    void removeAllObjects3D();
+    void removeAllLights();
+
+    void draw();
+    void clear();
+    void showUp();
+    void shutDown();
+
+};

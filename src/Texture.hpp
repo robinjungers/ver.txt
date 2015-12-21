@@ -19,7 +19,10 @@ class Texture {
 	GLint uTexture;
 
   public:
-	Texture( string fileTexture, Program &program );
+	Texture( string fileTexture );
+
+  void getUniformLocations( Program &program );
+
 	void bindTexture();
 	void debindTexture();
 

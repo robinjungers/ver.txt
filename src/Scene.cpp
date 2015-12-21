@@ -1,0 +1,111 @@
+#include "Scene.hpp"
+
+#include <iostream>
+
+using namespace std;
+using namespace glimac;
+using namespace glm;
+
+
+Scene::Scene( string name, FilePath vsPath, FilePath fsPath ) {
+
+  m_name = name;
+
+  m_program = loadProgram( vsPath, fsPath );
+  m_program.use();
+
+  m_uMVPMatrix = glGetUniformLocation( m_program.getGLId(), "uMVPMatrix" );
+  m_uMVMatrix = glGetUniformLocation( m_program.getGLId(), "uMVMatrix" );
+  m_uNormalMatrix = glGetUniformLocation( m_program.getGLId(), "uNormalMatrix" );
+
+  m_ProjMatrix = perspective( radians(70.f), 800.f/600.f, 0.1f, 100.f );
+
+  cout << endl << "Creating scene called : '" << m_name << "'" << endl;
+
+}
+
+Scene::~Scene() {
+
+  cout << endl << "Deleting scene called : '" << m_name << "'" << endl;
+
+  delete m_camera;
+
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i )
+    delete m_objects3D[i];
+  for ( unsigned i = 0; i < m_lights.size(); ++i )
+    delete m_lights[i];
+
+  m_objects3D.clear();
+  m_lights.clear();
+
+}
+
+
+
+// Setter
+void Scene::setAmbientColor( vec3 color ) {
+
+  glClearColor( color.x, color.y, color.z, 1.0 );
+
+}
+
+void Scene::setCamera( Camera *camera ) {
+
+  m_camera = camera;
+
+}
+
+
+// Adder
+void Scene::addObject3D( Object3D *object ) {
+
+  m_objects3D.push_back( object );
+  m_objects3D.back()->getUniformLocations( m_program );
+
+}
+
+void Scene::addLight( Light *light ) {
+
+  m_lights.push_back( light );
+  m_lights.back()->getUniformLocations( m_program );
+
+}
+
+
+
+
+// Displayer
+void Scene::draw() {
+
+  m_camera->moveOnPath();
+
+  m_MVMatrix = m_camera->getViewMatrix();
+  m_NormalMatrix = transpose( inverse( m_MVMatrix ) );
+
+  glUniformMatrix4fv( m_uMVPMatrix, 1, GL_FALSE, value_ptr( m_ProjMatrix * m_MVMatrix ) );
+  glUniformMatrix4fv( m_uMVMatrix, 1, GL_FALSE, value_ptr( m_MVMatrix ) );
+  glUniformMatrix4fv( m_uNormalMatrix, 1, GL_FALSE, value_ptr( m_NormalMatrix ) );
+
+  for ( unsigned i = 0; i < m_lights.size(); ++i )
+    m_lights[i]->sendUniformValues( m_MVMatrix );
+
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i )
+    m_objects3D[i]->draw();
+
+
+
+}
+
+void Scene::clear() {
+
+  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+}
+
+
+void Scene::showUp() {
+  // Transitions graphiques
+}
+void Scene::shutDown() {
+  // Transitions graphiques
+}

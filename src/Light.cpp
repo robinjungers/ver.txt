@@ -1,5 +1,7 @@
 #include "Light.hpp"
 
+#include <iostream>
+
 using namespace glimac;
 using namespace glm;
 
@@ -26,6 +28,13 @@ void Light::sendUniformValues( glm::mat4 ViewMatrix ) {
 }
 
 
+PointLight::PointLight() {
+
+  m_vect = vec4( 0.0, 0.0, 0.0, 1.0 );
+  m_intensity = vec3( 1.0, 1.0, 1.0 );
+
+}
+
 PointLight::PointLight( vec3 xyz ) {
 
   m_vect = vec4( xyz, 1.0 );
@@ -37,6 +46,13 @@ void PointLight::setPosition( vec3 xyz ) {
   m_vect = vec4( xyz, 1.0);
 }
 
+
+DirectionLight::DirectionLight() {
+
+  m_vect = vec4( 0.0, 0.0, 0.0, 0.0 );
+  m_intensity = vec3( 1.0, 1.0, 1.0 );
+
+}
 
 DirectionLight::DirectionLight( vec3 xyz ) {
 

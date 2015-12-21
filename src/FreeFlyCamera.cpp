@@ -109,6 +109,6 @@ mat4 FreeFlyCamera::getViewMatrix() {
 	computeDirectionVectors();
 
 	mat4 MV = lookAt( m_currentPosition.position, m_currentPosition.position + m_frontVector, m_upVector );
-	
+
 	return MV;
 }

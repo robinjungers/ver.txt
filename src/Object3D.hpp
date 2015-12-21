@@ -9,8 +9,8 @@
 class Object3D {
 
   protected:
-    //Material m_material;
-    //Texture m_texture;
+    Material * m_material;
+    Texture * m_texture;
     GLuint m_vbo;
     GLuint m_vao;
 
@@ -25,12 +25,16 @@ class Object3D {
 
   public:
     Object3D();
+    virtual ~Object3D() {};
 
     void setPosition( glm::vec3 position );
     void setRotation( glm::vec3 rotation );
     void setScale( glm::vec3 scale );
-    //void setMaterial( Material material );
-    //void setTexture( Texture texture );
+
+    void setMaterial( vec3 diffuseColor, vec3 specularColor, int shininess );
+    void setTexture( string fileTexture );
+
+    void getUniformLocations( Program &program );
 
     glm::vec3 getPosition();
     glm::vec3 getRotation();

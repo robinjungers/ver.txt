@@ -17,6 +17,7 @@ class Light {
     vec3 m_intensity;
 
   public:
+    virtual ~Light() {};
     virtual void setPosition( vec3 xyz ) = 0;
     void setIntensity( vec3 rgb );
     int  getUniformLocations( Program &program );
@@ -27,6 +28,8 @@ class Light {
 class PointLight : public Light {
 
   public:
+    PointLight();
+    ~PointLight() {};
     PointLight( vec3 xyz );
     void setPosition( vec3 xyz );
 
@@ -36,6 +39,7 @@ class DirectionLight : public Light {
 
   public:
     DirectionLight();
+    ~DirectionLight() {};
     DirectionLight( vec3 xyz );
     void setPosition( vec3 xyz );
 

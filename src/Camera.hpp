@@ -10,6 +10,8 @@ class Camera {
     unsigned m_currentSegment;
 
   public:
+    virtual ~Camera() {};
+
     virtual void moveOnPath() = 0;
     virtual glm::mat4 getViewMatrix() = 0;
 
