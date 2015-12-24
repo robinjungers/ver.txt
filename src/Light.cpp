@@ -10,14 +10,6 @@ GLint Light::m_uIntensity = 0;
 
 Light::Light( vec4 coord, vec3 intensity ) : m_coord( coord ), m_intensity( intensity ) {}
 
-void Light::setCoord( vec4 coord ) {
-  m_coord = coord;
-}
-
-void Light::setIntensity( vec3 intensity ) {
-  m_intensity = intensity;
-}
-
 int Light::getUniformLocations( Program &program ) {
 
   m_uCoord = glGetUniformLocation(program.getGLId(), "uLightCoord");

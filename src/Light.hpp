@@ -18,8 +18,6 @@ class Light {
 
   public:
     Light( vec4 coord, vec3 intensity );
-    void setCoord( vec4 coord );
-    void setIntensity( vec3 intensity );
     static int getUniformLocations( Program &program );
     void sendUniformValues( mat4 ViewMatrix );
 
