@@ -3,13 +3,17 @@
 using namespace glimac;
 using namespace glm;
 
+GLint Material::m_uKd = 0;
+GLint Material::m_uKs = 0;
+GLint Material::m_uShininess = 0;
+
 Material::Material( vec3 diffuseColor, vec3 specularColor, int shininess ):
 m_diffuseColor( diffuseColor ), m_specularColor( specularColor ), m_shininess( shininess ) {}
 
 void Material::getUniformLocations( Program &program ) {
 	m_uKd = glGetUniformLocation( program.getGLId(), "uKd" );
-  m_uKs = glGetUniformLocation( program.getGLId(), "uKs" );
-  m_uShininess = glGetUniformLocation( program.getGLId(), "uShininess" );
+	m_uKs = glGetUniformLocation( program.getGLId(), "uKs" );
+	m_uShininess = glGetUniformLocation( program.getGLId(), "uShininess" );
 }
 
 void Material::sendUniformValues() {

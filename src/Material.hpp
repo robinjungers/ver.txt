@@ -10,9 +10,9 @@ using namespace glm;
 class Material {
 
   private:
-	GLint m_uKd;
-	GLint m_uKs;
-	GLint m_uShininess;
+	static GLint m_uKd;
+	static GLint m_uKs;
+	static GLint m_uShininess;
 	vec3 m_diffuseColor;
 	vec3 m_specularColor;
 	int m_shininess;
@@ -20,7 +20,7 @@ class Material {
   public:
 	Material( vec3 diffuseColor, vec3 specularColor, int shininess );
 
-  void getUniformLocations( Program &program );
+	static void getUniformLocations( Program &program );
 	void sendUniformValues();
 
 	void setDiffuseColor( vec3 diffuseColor );

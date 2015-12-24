@@ -31,10 +31,8 @@ class Object3D {
     void setRotation( glm::vec3 rotation );
     void setScale( glm::vec3 scale );
 
-    void setMaterial( vec3 diffuseColor, vec3 specularColor, int shininess );
-    void setTexture( string fileTexture );
-
-    void getUniformLocations( Program &program );
+    void setMaterial( Material * material );
+    void setTexture( Texture * texture );
 
     glm::vec3 getPosition();
     glm::vec3 getRotation();

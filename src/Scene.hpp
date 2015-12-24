@@ -8,6 +8,8 @@
 
 #include "Object3D.hpp"
 #include "Light.hpp"
+#include "Material.hpp"
+#include "Texture.hpp"
 #include "TrackballCamera.hpp"
 #include "FreeFlyCamera.hpp"
 
@@ -28,6 +30,11 @@ class Scene {
 
     std::vector<Object3D*> m_objects3D;
     std::vector<Light*> m_lights;
+    std::vector<Material> m_materials; 
+    std::vector<Texture> m_textures; 
+
+    Material m_defaultMaterial;
+    Texture m_defaultTexture;
 
     Camera * m_camera;
 
@@ -39,7 +46,12 @@ class Scene {
     void setCamera( Camera *camera );
 
     void addObject3D( Object3D *object );
+    void addObject3D( Object3D *object, int idMaterial );
+    void addObject3D( Object3D *object, int idMaterial, int idTexture );
     void addLight( Light *light );
+
+    void addMaterial( vec3 diffuseColor, vec3 specularColor, int shininess );
+    void addTexture( string fileTexture );
 
     void removeAllObjects3D();
     void removeAllLights();

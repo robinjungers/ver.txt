@@ -66,19 +66,13 @@ void Object3D::setRotation( vec3 rotation ) {
 void Object3D::setScale( vec3 scale ) {
   m_scale = scale;
 }
-void Object3D::setMaterial( vec3 diffuseColor, vec3 specularColor, int shininess ) {
-  m_material = new Material( diffuseColor, specularColor, shininess );
+void Object3D::setMaterial( Material * material ) {
+  m_material = material;
 }
-void Object3D::setTexture( string fileTexture ) {
-  m_texture = new Texture( fileTexture );
+void Object3D::setTexture( Texture * texture ) {
+  m_texture = texture;
 }
 
-
-void Object3D::getUniformLocations( Program &program ) {
-  m_material->getUniformLocations( program );
-  m_texture->getUniformLocations( program );
-
-}
 
 
 vec3 Object3D::getPosition() {
@@ -97,19 +91,16 @@ void Object3D::draw() {
 
   // Binding
   glBindVertexArray( m_vao );
-  if ( m_texture != NULL )
-    m_texture->bindTexture();
+  m_texture->bindTexture();
 
   // Variables uniformes
-  if ( m_material != NULL )
-    m_material->sendUniformValues();
+  m_material->sendUniformValues();
 
   // Dessin
   glDrawArrays( GL_TRIANGLES, 0, m_vertices.size() );
 
   // Debinding
-  if ( m_texture != NULL )
-    m_texture->debindTexture();
+  m_texture->debindTexture();
   glBindVertexArray(0);
 
 }

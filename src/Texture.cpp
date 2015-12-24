@@ -3,6 +3,8 @@
 using namespace glimac;
 using namespace glm;
 
+GLint Texture::m_uTexture = 0;
+
 Texture::Texture( string fileTexture ) {
 
     unique_ptr<Image> Texture = loadImage( "assets/textures/" + fileTexture );
@@ -20,11 +22,11 @@ Texture::Texture( string fileTexture ) {
 }
 
 void Texture::getUniformLocations( Program &program ) {
-	uTexture = glGetUniformLocation( program.getGLId(), "uTexture" );
+	m_uTexture = glGetUniformLocation( program.getGLId(), "uTexture" );
 }
 
 void Texture::bindTexture() {
-	glUniform1i( uTexture, 0 );
+	glUniform1i( m_uTexture, 0 );
 	glBindTexture( GL_TEXTURE_2D, m_texture );
 }
 

@@ -16,12 +16,12 @@ class Texture {
 
   private:
 	GLuint m_texture;
-	GLint uTexture;
+	static GLint m_uTexture;
 
   public:
 	Texture( string fileTexture );
 
-  void getUniformLocations( Program &program );
+	static void getUniformLocations( Program &program );
 
 	void bindTexture();
 	void debindTexture();

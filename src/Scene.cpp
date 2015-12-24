@@ -7,7 +7,9 @@ using namespace glimac;
 using namespace glm;
 
 
-Scene::Scene( string name, FilePath vsPath, FilePath fsPath ) {
+Scene::Scene( string name, FilePath vsPath, FilePath fsPath )
+: m_defaultMaterial( vec3( 1.0, 1.0, 1.0 ), vec3( 1.0, 1.0, 1.0 ), 30 ),
+m_defaultTexture( "default.png" ) {
 
   m_name = name;
 
@@ -17,6 +19,9 @@ Scene::Scene( string name, FilePath vsPath, FilePath fsPath ) {
   m_uMVPMatrix = glGetUniformLocation( m_program.getGLId(), "uMVPMatrix" );
   m_uMVMatrix = glGetUniformLocation( m_program.getGLId(), "uMVMatrix" );
   m_uNormalMatrix = glGetUniformLocation( m_program.getGLId(), "uNormalMatrix" );
+
+  Material::getUniformLocations( m_program );
+  Texture::getUniformLocations( m_program );
 
   m_ProjMatrix = perspective( radians(70.f), 800.f/600.f, 0.1f, 100.f );
 
@@ -34,9 +39,6 @@ Scene::~Scene() {
     delete m_objects3D[i];
   for ( unsigned i = 0; i < m_lights.size(); ++i )
     delete m_lights[i];
-
-  m_objects3D.clear();
-  m_lights.clear();
 
 }
 
@@ -56,11 +58,29 @@ void Scene::setCamera( Camera *camera ) {
 }
 
 
+
 // Adder
 void Scene::addObject3D( Object3D *object ) {
 
   m_objects3D.push_back( object );
-  m_objects3D.back()->getUniformLocations( m_program );
+  m_objects3D.back()->setMaterial( &m_defaultMaterial );
+  m_objects3D.back()->setTexture( &m_defaultTexture );
+
+}
+
+void Scene::addObject3D( Object3D *object, int idMaterial ) {
+
+  m_objects3D.push_back( object );
+  m_objects3D.back()->setMaterial( &( m_materials[idMaterial] ) );
+  m_objects3D.back()->setTexture( &m_defaultTexture );
+
+}
+
+void Scene::addObject3D( Object3D *object, int idMaterial, int idTexture ) {
+
+  m_objects3D.push_back( object );
+  m_objects3D.back()->setMaterial( &( m_materials[idMaterial] ) );
+  m_objects3D.back()->setTexture( &( m_textures[idTexture] ) );
 
 }
 
@@ -71,6 +91,17 @@ void Scene::addLight( Light *light ) {
 
 }
 
+void Scene::addMaterial( vec3 diffuseColor, vec3 specularColor, int shininess ) {
+
+  m_materials.push_back( Material( diffuseColor, specularColor, shininess ) );
+
+}
+
+void Scene::addTexture( string fileTexture ) {
+
+  m_textures.push_back( Texture( fileTexture ) );
+
+}
 
 
 
