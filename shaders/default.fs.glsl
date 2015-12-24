@@ -12,13 +12,64 @@ uniform vec3 uKd;
 uniform vec3 uKs;
 uniform float uShininess;
 
-uniform vec4 uLightCoord;
-uniform vec3 uLightIntensity;
+
+#define MAX_LIGHTS 10
+uniform int uNbLights;
+uniform struct Light {
+   vec4 coord;
+   vec3 intensity;
+} uLights[MAX_LIGHTS];
+
+
+/*#define MAX_LIGHTS 10
+
+struct Light {
+   vec4 coord;
+   vec3 intensity;
+};
+
+uniform int uNbLights;
+uniform struct uLights {
+	Light lights[MAX_LIGHTS];
+};*/
 
 
 vec3 blinnPhong() {
 
+	vec3 fragmentColor = vec3(0);
+
 	vec3 diffuse = texture(uTexture, vTexCoords).rgb * uKd;
+	vec3 vNormalNorm = normalize(vNormal);
+	vec3 w_zero = normalize( -vPosition );
+
+
+	for ( int i = 0; i < uNbLights; ++i ) {
+
+		vec3 w_i = vec3( 0.0, 0.0, 0.0 );
+		vec3 L_i = vec3( 0.0, 0.0, 0.0 );
+
+		if ( uLights[i].coord.w == 1.0 ) {
+
+			w_i = normalize( uLights[i].coord.xyz - vPosition );
+			float d = distance(uLights[i].coord.xyz, vPosition);
+			L_i = uLights[i].intensity / (d * d);
+
+		} else {
+
+			w_i = normalize( -uLights[i].coord.xyz );
+			L_i = uLights[i].intensity;
+
+		}
+
+		vec3 halfVector = (w_zero + w_i) / 2;
+
+	    fragmentColor += L_i * ( diffuse * ( dot(w_i, vNormalNorm ) ) + uKs * ( pow( dot(halfVector, vNormalNorm), uShininess ) ) );
+
+	}
+
+	return fragmentColor;
+
+	/*vec3 diffuse = texture(uTexture, vTexCoords).rgb * uKd;
 
 	vec3 vNormalNorm = normalize(vNormal);
 	
@@ -42,13 +93,12 @@ vec3 blinnPhong() {
 
 	vec3 halfVector = (w_zero + w_i) / 2;
 
-	return L_i * ( diffuse * ( dot(w_i, vNormalNorm ) ) + uKs * ( pow( dot(halfVector, vNormalNorm), uShininess ) ) );
+	return L_i * ( diffuse * ( dot(w_i, vNormalNorm ) ) + uKs * ( pow( dot(halfVector, vNormalNorm), uShininess ) ) );*/
 }
 
 
 void main() {
 
-	
 	fColor = blinnPhong();
 
 }

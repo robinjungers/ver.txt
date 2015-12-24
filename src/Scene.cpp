@@ -119,13 +119,17 @@ void Scene::draw() {
   glUniformMatrix4fv( m_uMVMatrix, 1, GL_FALSE, value_ptr( m_MVMatrix ) );
   glUniformMatrix4fv( m_uNormalMatrix, 1, GL_FALSE, value_ptr( m_NormalMatrix ) );
 
-  for ( unsigned i = 0; i < m_lights.size(); ++i )
-    m_lights[i]->sendUniformValues( m_MVMatrix );
+
+  int nbLights = m_lights.size();
+
+  Light::sendUniformNumber( nbLights );
+
+  for ( unsigned i = 0; ( i < nbLights ) && ( i < MAX_LIGHTS ); ++i )
+    m_lights[i]->sendUniformValues( m_MVMatrix, i );
+
 
   for ( unsigned i = 0; i < m_objects3D.size(); ++i )
     m_objects3D[i]->draw();
-
-
 
 }
 

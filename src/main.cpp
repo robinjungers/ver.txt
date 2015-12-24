@@ -56,19 +56,20 @@ int main( int argc, char** argv ) {
   camera->addControlPoint( (TrackballPosition) { 5.0, 30.0, 360.0 } );
 
   // Test light
-  // Light * light = new Light( vec4( 0.0, 5.0, -5.0, 1.0 ), vec3( 25.0, 25.0, 25.0 ) );
-  Light * light = new Light( vec4( 0.0, -1.0, 0.0, 0.0 ), vec3( 25.0, 25.0, 25.0 ) );
+  Light * pointLight = new Light( vec4( 0.0, 5.0, -5.0, 1.0 ), vec3( 0.0, 0.0, 500.0 ) );
+  Light * directionalLight = new Light( vec4( 0.0, -1.0, 0.0, 0.0 ), vec3( 0.0, 10.0, 0.0 ) );
 
   // Test objects
   Quad * quad = new Quad();
-  scene.addMaterial( vec3( 1.0, 0.0, 0.0 ), vec3( 1.0, 1.0, 1.0 ), 30 );
+  scene.addMaterial( vec3( 0.05, 0.05, 0.05 ), vec3( 0.1, 0.1, 0.1 ), 30 );
   scene.addTexture( "lol.jpg" );
-  // scene.addObject3D( quad, 0, 0 );
-  scene.addObject3D( quad, 0 );
+  scene.addObject3D( quad, 0, 0 );
+  // scene.addObject3D( quad, 0 );
 
   // Test scene
   scene.setCamera( camera );
-  scene.addLight( light );
+  scene.addLight( pointLight );
+  scene.addLight( directionalLight );
 
   // Display loop
   bool done = false;
