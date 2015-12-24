@@ -56,8 +56,8 @@ int main( int argc, char** argv ) {
   camera->addControlPoint( (TrackballPosition) { 5.0, 30.0, 360.0 } );
 
   // Test light
-  PointLight * light = new PointLight( vec3( 0.0, 5.0, -5.0 ) );
-  light->setIntensity( vec3( 25.0, 25.0, 25.0 ) );
+  // Light * light = new Light( vec4( 0.0, 5.0, -5.0, 1.0 ), vec3( 25.0, 25.0, 25.0 ) );
+  Light * light = new Light( vec4( 0.0, -1.0, 0.0, 0.0 ), vec3( 25.0, 25.0, 25.0 ) );
 
   // Test objects
   Quad * quad = new Quad();

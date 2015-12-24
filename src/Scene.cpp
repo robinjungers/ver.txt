@@ -20,6 +20,8 @@ m_defaultTexture( "default.png" ) {
   m_uMVMatrix = glGetUniformLocation( m_program.getGLId(), "uMVMatrix" );
   m_uNormalMatrix = glGetUniformLocation( m_program.getGLId(), "uNormalMatrix" );
 
+  Light::getUniformLocations( m_program );
+
   Material::getUniformLocations( m_program );
   Texture::getUniformLocations( m_program );
 

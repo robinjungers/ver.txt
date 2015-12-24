@@ -10,37 +10,17 @@ using namespace glm;
 class Light {
 
   protected:
-    GLint uPos;
-    GLint uIntensity;
+    static GLint m_uCoord;
+    static GLint m_uIntensity;
 
-    vec4 m_vect;
+    vec4 m_coord;
     vec3 m_intensity;
 
   public:
-    virtual ~Light() {};
-    virtual void setPosition( vec3 xyz ) = 0;
-    void setIntensity( vec3 rgb );
-    int  getUniformLocations( Program &program );
+    Light( vec4 coord, vec3 intensity );
+    void setCoord( vec4 coord );
+    void setIntensity( vec3 intensity );
+    static int getUniformLocations( Program &program );
     void sendUniformValues( mat4 ViewMatrix );
-
-};
-
-class PointLight : public Light {
-
-  public:
-    PointLight();
-    ~PointLight() {};
-    PointLight( vec3 xyz );
-    void setPosition( vec3 xyz );
-
-};
-
-class DirectionLight : public Light {
-
-  public:
-    DirectionLight();
-    ~DirectionLight() {};
-    DirectionLight( vec3 xyz );
-    void setPosition( vec3 xyz );
 
 };
