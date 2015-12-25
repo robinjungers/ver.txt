@@ -72,7 +72,7 @@ vec3 blinnPhong() {
 	/*vec3 diffuse = texture(uTexture, vTexCoords).rgb * uKd;
 
 	vec3 vNormalNorm = normalize(vNormal);
-	
+
 	vec3 w_zero = normalize( -vPosition );
 
 	vec3 w_i = vec3( 0.0, 0.0, 0.0 );

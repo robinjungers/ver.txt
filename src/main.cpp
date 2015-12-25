@@ -1,3 +1,9 @@
+/*
+A NOTER
+possibles soucis de compilation dus aux changement de fonctions entre SDL 1.2 et SDL2
+> résolus en principe
+*/
+
 #include <iostream>
 
 #include <GL/glew.h>
@@ -15,6 +21,8 @@
 #include "Texture.hpp"
 #include "Light.hpp"
 #include "Scene.hpp"
+#include "InputManager.hpp"
+#include "SceneManager.hpp"
 
 #include "Sphere.hpp"
 #include "Quad.hpp"
@@ -39,57 +47,62 @@ int main( int argc, char** argv ) {
   std::cout << "OpenGL Version : " << glGetString( GL_VERSION ) << std::endl;
   std::cout << "GLEW Version   : " << glewGetString( GLEW_VERSION ) << std::endl;
 
+	// Init inputManager
+	InputManager inputManager;
 
+	// Init sceneManager
 	FilePath applicationPath( argv[0] );
-	Scene scene( "La scène de Robin hihihi",
-                 applicationPath.dirPath() + "shaders/default.vs.glsl",
-                 applicationPath.dirPath() + "shaders/default.fs.glsl"
-                 );
-
-  // Z-buffer
-  glEnable(GL_DEPTH_TEST);
-
-  // Test camera
-  TrackballCamera * camera = new TrackballCamera( 6000 );
-  camera->addControlPoint( (TrackballPosition) { 5.0, 30.0,   0.0 } );
-  camera->addControlPoint( (TrackballPosition) { 8.0, 60.0, 180.0 } );
-  camera->addControlPoint( (TrackballPosition) { 5.0, 30.0, 360.0 } );
-
-  // Test light
-  Light * pointLight = new Light( vec4( 0.0, 5.0, -5.0, 1.0 ), vec3( 0.0, 0.0, 500.0 ) );
-  Light * directionalLight = new Light( vec4( 0.0, -1.0, 0.0, 0.0 ), vec3( 0.0, 10.0, 0.0 ) );
-
-  // Test objects
-  Quad * quad = new Quad();
-  scene.addMaterial( vec3( 0.05, 0.05, 0.05 ), vec3( 0.1, 0.1, 0.1 ), 30 );
-  scene.addTexture( "lol.jpg" );
-  scene.addObject3D( quad, 0, 0 );
-  // scene.addObject3D( quad, 0 );
-
-  // Test scene
-  scene.setCamera( camera );
-  scene.addLight( pointLight );
-  scene.addLight( directionalLight );
+	SceneManager sceneManager;
+	sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager );
 
   // Display loop
   bool done = false;
   while( !done ) {
 
-  SDL_Event e;
-  while( windowManager.pollEvent( e ) ) {
-    
-    if( e.type == SDL_QUIT )
-		done = true;
+  	SDL_Event e;
+  	while( windowManager.pollEvent( e ) ) {
+
+  		if( e.type == SDL_QUIT )
+				done = true;
+			else if ( e.type == SDL_KEYDOWN ) {
+
+				#ifdef __APPLE__
+	      	SDL_Keycode keyPressed = e.key.keysym.sym;
+				#else
+					SDLKey keyPressed = e.key.keysym.sym;
+				#endif
+
+	      switch ( keyPressed ) {
+	        case SDLK_ESCAPE:
+	          done = true;
+	        break;
+					case SDLK_RETURN:
+						if ( inputManager.validate() )
+							sceneManager.setCurrentScene( inputManager.getIndex() );
+					break;
+					case SDLK_BACKSPACE:
+						inputManager.deleteLastChar();
+						inputManager.display();
+					break;
+        }
+
+				if ( (keyPressed >= SDLK_a) && (keyPressed < SDLK_z) ) {
+					string keyValue = SDL_GetKeyName( keyPressed );
+					inputManager.addToInput( keyValue );
+					inputManager.display();
+				}
+
+      }
     }
 
     // Dessin
-    scene.clear();
-    scene.draw();
+    sceneManager.clear();
+    sceneManager.draw();
 
     // Swap
     windowManager.swapBuffers();
 
-    }
+  }
 
   return EXIT_SUCCESS;
 }

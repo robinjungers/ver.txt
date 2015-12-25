@@ -88,6 +88,9 @@ void Scene::addObject3D( Object3D *object, int idMaterial, int idTexture ) {
 
 void Scene::addLight( Light *light ) {
 
+  if ( m_lights.size() == 10 )
+    m_lights.erase(  m_lights.begin() );
+
   m_lights.push_back( light );
   m_lights.back()->getUniformLocations( m_program );
 
