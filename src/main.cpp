@@ -1,9 +1,3 @@
-/*
-A NOTER
-possibles soucis de compilation dus aux changement de fonctions entre SDL 1.2 et SDL2
-> résolus en principe
-*/
-
 #include <iostream>
 
 #include <GL/glew.h>
@@ -47,6 +41,10 @@ int main( int argc, char** argv ) {
   std::cout << "OpenGL Version : " << glGetString( GL_VERSION ) << std::endl;
   std::cout << "GLEW Version   : " << glewGetString( GLEW_VERSION ) << std::endl;
 
+  // Frame duration
+  const float FRAME_DURATION = 1000 / 60;
+
+
 	// Init inputManager
 	InputManager inputManager;
 
@@ -55,10 +53,16 @@ int main( int argc, char** argv ) {
 	SceneManager sceneManager;
 	sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager );
 
+
   // Display loop
   bool done = false;
   while( !done ) {
 
+  	// Used for frame rate cap
+  	Uint32 startTime = SDL_GetTicks();
+
+
+  	// Events
   	SDL_Event e;
   	while( windowManager.pollEvent( e ) ) {
 
@@ -73,17 +77,21 @@ int main( int argc, char** argv ) {
 				#endif
 
 	      switch ( keyPressed ) {
+
 	        case SDLK_ESCAPE:
 	          done = true;
-	        break;
+	        	break;
+
 					case SDLK_RETURN:
 						if ( inputManager.validate() )
 							sceneManager.setCurrentScene( inputManager.getIndex() );
-					break;
+						break;
+
 					case SDLK_BACKSPACE:
 						inputManager.deleteLastChar();
 						inputManager.display();
-					break;
+						break;
+
         }
 
 				if ( (keyPressed >= SDLK_a) && (keyPressed < SDLK_z) ) {
@@ -95,12 +103,21 @@ int main( int argc, char** argv ) {
       }
     }
 
-    // Dessin
+
+    // Draw
     sceneManager.clear();
     sceneManager.draw();
 
+
     // Swap
     windowManager.swapBuffers();
+
+
+    // Frame rate cap
+    Uint32 elapsedTime = SDL_GetTicks() - startTime;
+
+    if(elapsedTime < FRAME_DURATION)
+      SDL_Delay(FRAME_DURATION - elapsedTime);
 
   }
 

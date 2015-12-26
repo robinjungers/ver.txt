@@ -156,7 +156,7 @@ void SceneManager::loadSphereFromFileLine( Scene * scene, istringstream &lineStr
 
 void SceneManager::setCurrentScene( unsigned index ) {
 
-m_currentScene = index;
+  m_currentScene = index;
 
 }
 
