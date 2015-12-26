@@ -11,15 +11,8 @@
 #include <glimac/Program.hpp>
 #include <glimac/FilePath.hpp>
 
-#include "TrackballCamera.hpp"
-#include "Texture.hpp"
-#include "Light.hpp"
-#include "Scene.hpp"
 #include "InputManager.hpp"
 #include "SceneManager.hpp"
-
-#include "Sphere.hpp"
-#include "Quad.hpp"
 
 
 using namespace glimac;
@@ -31,6 +24,9 @@ int main( int argc, char** argv ) {
   // Initialize SDL and open a window
   SDLWindowManager windowManager( 800, 600, "Ver.txt" );
 
+  SDL_EnableKeyRepeat( 400, 100 );
+  SDL_EnableUNICODE( 1 );
+
   // Initialize glew for OpenGL3+ support
   glewExperimental = GL_TRUE;
   GLenum glewInitError = glewInit();
@@ -40,6 +36,10 @@ int main( int argc, char** argv ) {
   }
   std::cout << "OpenGL Version : " << glGetString( GL_VERSION ) << std::endl;
   std::cout << "GLEW Version   : " << glewGetString( GLEW_VERSION ) << std::endl;
+
+  // Enable OpenGL blending
+  glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   // Frame duration
   const float FRAME_DURATION = 1000 / 60;
@@ -89,15 +89,13 @@ int main( int argc, char** argv ) {
 
 					case SDLK_BACKSPACE:
 						inputManager.deleteLastChar();
-						inputManager.display();
 						break;
 
         }
 
-				if ( (keyPressed >= SDLK_a) && (keyPressed < SDLK_z) ) {
+				if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) ) {
 					string keyValue = SDL_GetKeyName( keyPressed );
 					inputManager.addToInput( keyValue );
-					inputManager.display();
 				}
 
       }
@@ -107,6 +105,8 @@ int main( int argc, char** argv ) {
     // Draw
     sceneManager.clear();
     sceneManager.draw();
+
+    inputManager.display();
 
 
     // Swap

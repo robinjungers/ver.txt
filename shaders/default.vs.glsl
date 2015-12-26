@@ -9,6 +9,7 @@ layout(location = 2) in vec2 aVertexTexCoords;
 uniform mat4 uMVPMatrix;
 uniform mat4 uMVMatrix;
 uniform mat4 uNormalMatrix;
+uniform bool uIsText;
 
 // Output
 out vec3 vPosition;
@@ -20,10 +21,22 @@ void main() {
 	vec4 vertexPosition = vec4(aVertexPosition, 1);
 	vec4 vertexNormal = vec4(aVertexNormal, 0);
 
-	vPosition = vec3(uMVMatrix * vertexPosition);
-    vNormal = vec3(uNormalMatrix * vertexNormal);
-    vTexCoords = aVertexTexCoords;
+  if ( uIsText ) {
 
-    gl_Position = uMVPMatrix * vertexPosition;
+  	vPosition = aVertexPosition;
+  	vNormal = aVertexNormal;
+  	vTexCoords = aVertexTexCoords;
+
+  	gl_Position = uMVPMatrix * vertexPosition;
+
+  } else {
+
+		vPosition = vec3(uMVMatrix * vertexPosition);
+	  vNormal = vec3(uNormalMatrix * vertexNormal);
+	  vTexCoords = aVertexTexCoords;
+
+	  gl_Position = uMVPMatrix * vertexPosition;
+
+  }
 
 }

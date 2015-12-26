@@ -18,37 +18,37 @@ void Quad::buildVertices() {
 	vertex.normal = vec3( 0.0, 1.0, 0.0 );
 	vertex.texCoords = vec2( 0.0, 0.0 );
 
-    m_vertices.push_back(vertex);
+	m_vertices.push_back(vertex);
 
-    vertex.position = vec3( 1.0, 0.0, 1.0 );
+	vertex.position = vec3( 1.0, 0.0, 1.0 );
 	vertex.normal = vec3( 0.0, 1.0, 0.0 );
 	vertex.texCoords = vec2( 1.0, 0.0 );
 
-    m_vertices.push_back(vertex);
+	m_vertices.push_back(vertex);
 
-    vertex.position = vec3( 1.0, 0.0, -1.0 );
+  vertex.position = vec3( 1.0, 0.0, -1.0 );
 	vertex.normal = vec3( 0.0, 1.0, 0.0 );
 	vertex.texCoords = vec2( 1.0, 1.0 );
 
-    m_vertices.push_back(vertex);
+	m_vertices.push_back(vertex);
 
-    vertex.position = vec3( -1.0, 0.0, 1.0 );
+	vertex.position = vec3( -1.0, 0.0, 1.0 );
 	vertex.normal = vec3( 0.0, 1.0, 0.0 );
 	vertex.texCoords = vec2( 0.0, 0.0 );
 
-    m_vertices.push_back(vertex);
-
-    vertex.position = vec3( -1.0, 0.0, -1.0 );
+  m_vertices.push_back(vertex);
+ 
+  vertex.position = vec3( -1.0, 0.0, -1.0 );
 	vertex.normal = vec3( 0.0, 1.0, 0.0 );
 	vertex.texCoords = vec2( 0.0, 1.0 );
 
-    m_vertices.push_back(vertex);
+  m_vertices.push_back(vertex);
 
-    vertex.position = vec3( 1.0, 0.0, -1.0 );
+  vertex.position = vec3( 1.0, 0.0, -1.0 );
 	vertex.normal = vec3( 0.0, 1.0, 0.0 );
 	vertex.texCoords = vec2( 1.0, 1.0 );
 
-    m_vertices.push_back(vertex);
+  m_vertices.push_back(vertex);
 
 }
 

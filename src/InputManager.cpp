@@ -3,23 +3,47 @@
 #include <iostream>
 #include <algorithm>
 
+#include <glimac/glm.hpp>
 
-InputManager::InputManager() {
+#include "Texture.hpp"
+
+using namespace glm;
+
+GLint InputManager::m_uIsText = 0;
+GLint InputManager::m_uMVPMatrix = 0;
+
+InputManager::InputManager() : m_fontTexture( "font.png" ) {
 
   m_inputValue = "";
   m_index = 0;
+
+  // Initialise bitmap font
+  for ( unsigned i = 0; i < 26; i++ ) {
+    Letter letter( i );
+    letter.setTexture( &m_fontTexture );
+    m_letters.push_back(letter);
+  }
+
+}
+
+void InputManager::getUniformLocations( Program &program ) {
+
+  m_uIsText = glGetUniformLocation( program.getGLId(), "uIsText" );
+  m_uMVPMatrix = glGetUniformLocation( program.getGLId(), "uMVPMatrix" );
 
 }
 
 void InputManager::addToInput( char c ) {
 
-  m_inputValue += c;
+  if ( m_inputValue.size() < maxLetters )
+    m_inputValue += c;
 
 }
 
 void InputManager::addToInput( std::string s ) {
 
-  m_inputValue += s;
+  if ( m_inputValue.size() < maxLetters )
+    m_inputValue += s;
 
 }
 
@@ -65,7 +89,27 @@ bool InputManager::validate() {
 
 void InputManager::display() {
 
-  std::cout << "Current input value : " << m_inputValue << std::endl;
+  //std::cout << "Current input value : " << m_inputValue << std::endl;
+
+  glUniform1i(m_uIsText, true);
+
+  unsigned nbLetters = m_inputValue.size();
+
+  glm::mat4 MVPMatrix = scale(mat4(1), vec3( 0.1, 0.1, 0.1 ));
+  MVPMatrix = translate( MVPMatrix, vec3( -( nbLetters * 0.5 ), 0.5, 0.0 ) );
+
+  for ( unsigned i = 0; i < nbLetters; ++i ) {
+
+    unsigned char character = m_inputValue[i];
+
+    glUniformMatrix4fv( m_uMVPMatrix, 1, GL_FALSE, value_ptr( MVPMatrix ) );
+    m_letters[ m_inputValue[ i ] - asciiLettersOffset ].draw();
+
+    MVPMatrix = translate( MVPMatrix, vec3( 1.0, 0.0, 0.0 ) );
+
+  }
+
+  glUniform1i(m_uIsText, false);
 
 }
 

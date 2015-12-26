@@ -7,14 +7,14 @@ GLint Texture::m_uTexture = 0;
 
 Texture::Texture( string fileTexture ) {
 
-    unique_ptr<Image> Texture = loadImage( "assets/textures/" + fileTexture );
+    unique_ptr<Image> texture = loadImage( "assets/textures/" + fileTexture );
 
-    if( Texture == NULL )
+    if( texture == NULL )
         cerr << "Can't load texture " << fileTexture << " \n" << endl;
 
     glGenTextures( 1, &m_texture );
     glBindTexture( GL_TEXTURE_2D, m_texture );
-    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, Texture->getWidth(), Texture->getHeight(), 0, GL_RGBA, GL_FLOAT, Texture->getPixels() );
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, texture->getWidth(), texture->getHeight(), 0, GL_RGBA, GL_FLOAT, texture->getPixels() );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glBindTexture( GL_TEXTURE_2D, 0 );

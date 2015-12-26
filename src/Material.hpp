@@ -1,8 +1,8 @@
 #pragma once
 
 #include <GL/glew.h>
-#include "glimac/glm.hpp"
-#include "glimac/Program.hpp"
+#include <glimac/glm.hpp>
+#include <glimac/Program.hpp>
 
 using namespace glimac;
 using namespace glm;

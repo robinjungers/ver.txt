@@ -18,8 +18,8 @@ void Material::getUniformLocations( Program &program ) {
 
 void Material::sendUniformValues() {
 	glUniform3f(m_uKd, m_diffuseColor.r, m_diffuseColor.g, m_diffuseColor.b);
-    glUniform3f(m_uKs, m_specularColor.r, m_specularColor.g, m_specularColor.b);
-    glUniform1f(m_uShininess, m_shininess);
+  glUniform3f(m_uKs, m_specularColor.r, m_specularColor.g, m_specularColor.b);
+  glUniform1f(m_uShininess, m_shininess);
 }
 
 void Material::setDiffuseColor( vec3 diffuseColor ){

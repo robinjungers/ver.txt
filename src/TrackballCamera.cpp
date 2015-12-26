@@ -1,5 +1,6 @@
 #include "TrackballCamera.hpp"
 #include "tools.hpp"
+#include <iostream>
 
 using namespace glm;
 
