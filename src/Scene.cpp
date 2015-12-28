@@ -26,7 +26,7 @@ m_defaultTexture( "default.png" ) {
   Texture::getUniformLocations( m_program );
   InputManager::getUniformLocations( m_program );
 
-  m_ProjMatrix = perspective( radians(70.f), 800.f/600.f, 0.1f, 100.f );
+  m_ProjMatrix = perspective( radians(70.f), 800.f/600.f, 0.1f, 1000.f );
 
   cout << endl << "Creating scene called : '" << m_name << "'" << endl;
 

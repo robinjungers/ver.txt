@@ -14,7 +14,6 @@
 #include "InputManager.hpp"
 #include "SceneManager.hpp"
 
-
 using namespace glimac;
 using namespace glm;
 
@@ -25,7 +24,7 @@ int main( int argc, char** argv ) {
   SDLWindowManager windowManager( 800, 600, "Ver.txt" );
 
   SDL_EnableKeyRepeat( 400, 100 );
-  SDL_EnableUNICODE( 1 );
+  SDL_EnableUNICODE(SDL_ENABLE);
 
   // Initialize glew for OpenGL3+ support
   glewExperimental = GL_TRUE;
@@ -43,6 +42,8 @@ int main( int argc, char** argv ) {
 
   // Frame duration
   const float FRAME_DURATION = 1000 / 60;
+
+  std::cout << (int) 'a' << std::endl;
 
 
 	// Init inputManager
@@ -92,11 +93,9 @@ int main( int argc, char** argv ) {
 						break;
 
         }
-
-				if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) ) {
-					string keyValue = SDL_GetKeyName( keyPressed );
-					inputManager.addToInput( keyValue );
-				}
+        
+				if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) )
+					inputManager.addToInput( e.key.keysym.unicode );
 
       }
     }

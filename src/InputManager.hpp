@@ -21,8 +21,6 @@ class InputManager {
     static GLint m_uIsText;
     Texture m_fontTexture;
 
-    void loadLetters();
-
   public:
     InputManager();
 

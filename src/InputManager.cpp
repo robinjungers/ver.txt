@@ -14,11 +14,11 @@ GLint InputManager::m_uMVPMatrix = 0;
 
 InputManager::InputManager() : m_fontTexture( "font.png" ) {
 
-  m_inputValue = "";
+  m_inputValue = "ver.txt";
   m_index = 0;
 
   // Initialise bitmap font
-  for ( unsigned i = 0; i < 26; i++ ) {
+  for ( unsigned i = 0; i < 27; i++ ) {
     Letter letter( i );
     letter.setTexture( &m_fontTexture );
     m_letters.push_back(letter);
@@ -34,6 +34,8 @@ void InputManager::getUniformLocations( Program &program ) {
 }
 
 void InputManager::addToInput( char c ) {
+
+
 
   if ( m_inputValue.size() < maxLetters )
     m_inputValue += c;
@@ -89,8 +91,6 @@ bool InputManager::validate() {
 
 void InputManager::display() {
 
-  //std::cout << "Current input value : " << m_inputValue << std::endl;
-
   glUniform1i(m_uIsText, true);
 
   unsigned nbLetters = m_inputValue.size();
@@ -103,7 +103,11 @@ void InputManager::display() {
     unsigned char character = m_inputValue[i];
 
     glUniformMatrix4fv( m_uMVPMatrix, 1, GL_FALSE, value_ptr( MVPMatrix ) );
-    m_letters[ m_inputValue[ i ] - asciiLettersOffset ].draw();
+    
+    if ( character == '.' )
+      m_letters[ 26 ].draw();
+    else
+      m_letters[ character - asciiLettersOffset ].draw();
 
     MVPMatrix = translate( MVPMatrix, vec3( 1.0, 0.0, 0.0 ) );
 

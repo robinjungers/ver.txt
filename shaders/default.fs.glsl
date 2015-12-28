@@ -66,6 +66,6 @@ void main() {
 	if ( uIsText )
 		fColor = texture(uTexture, vTexCoords);
 	else
-		fColor = vec4(blinnPhong(), 1);;
+		fColor = vec4(blinnPhong(), 1);
 
 }
