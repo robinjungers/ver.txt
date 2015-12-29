@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project( game )
+project( vertxt )
 
 add_definitions(-std=c++11)
 
@@ -39,8 +39,8 @@ add_subdirectory(3rdparts/glimac)
 file(GLOB SRC_FILES src/*.cpp src/*.hpp shaders/*.glsl)
 
 	
-add_executable(game ${SRC_FILES})
-target_link_libraries(game ${ALL_LIBRARIES})
+add_executable(vertxt ${SRC_FILES})
+target_link_libraries(vertxt ${ALL_LIBRARIES})
 
 
 file(COPY shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

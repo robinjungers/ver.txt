@@ -8,7 +8,7 @@ using namespace glimac;
 using namespace glm;
 
 
-Scene::Scene( string name, FilePath vsPath, FilePath fsPath )
+Scene::Scene( string name, FilePath vsPath, FilePath fsPath, float viewportWidth, float viewportHeight )
 : m_defaultMaterial( vec3( 1.0, 1.0, 1.0 ), vec3( 1.0, 1.0, 1.0 ), 30 ),
 m_defaultTexture( "default.png" ) {
 
@@ -26,8 +26,8 @@ m_defaultTexture( "default.png" ) {
   Texture::getUniformLocations( m_program );
   InputManager::getUniformLocations( m_program );
 
-  m_ProjMatrix = perspective( radians(70.f), 800.f/600.f, 0.1f, 1000.f );
-
+  setViewportDimensions( viewportWidth, viewportHeight );
+  
   cout << endl << "Creating scene called : '" << m_name << "'" << endl;
 
 }
@@ -48,6 +48,12 @@ Scene::~Scene() {
 
 
 // Setter
+void Scene::setViewportDimensions( float viewportWidth, float viewportHeight ) {
+
+  m_ProjMatrix = perspective( radians( 70.f ), viewportWidth / viewportHeight, 0.1f, 1000.f );
+
+}
+
 void Scene::setAmbientColor( vec3 color ) {
 
   glClearColor( color.x, color.y, color.z, 1.0 );

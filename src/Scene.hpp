@@ -39,9 +39,10 @@ class Scene {
     Camera * m_camera;
 
   public:
-    Scene( string name, FilePath vsPath, FilePath fsPath );
+    Scene( string name, FilePath vsPath, FilePath fsPath, float viewportWidth, float viewportHeight );
     ~Scene();
 
+    void setViewportDimensions( float viewportWidth, float viewportHeight );
     void setAmbientColor( glm::vec3 color );
     void setCamera( Camera *camera );
 

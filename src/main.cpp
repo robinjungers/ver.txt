@@ -17,11 +17,14 @@
 using namespace glimac;
 using namespace glm;
 
+const unsigned viewportWidth = 800, viewportHeight = 600; // Viewport dimensions
+const float FRAME_DURATION = 1000 / 60; // Frame duration
+
 
 int main( int argc, char** argv ) {
 
   // Initialize SDL and open a window
-  SDLWindowManager windowManager( 800, 600, "Ver.txt" );
+  SDLWindowManager windowManager( viewportWidth, viewportHeight, "" );
 
   SDL_EnableKeyRepeat( 400, 100 );
   SDL_EnableUNICODE(SDL_ENABLE);
@@ -40,19 +43,14 @@ int main( int argc, char** argv ) {
   glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  // Frame duration
-  const float FRAME_DURATION = 1000 / 60;
-
-  std::cout << (int) 'a' << std::endl;
-
 
 	// Init inputManager
-	InputManager inputManager;
+	InputManager inputManager( viewportWidth, viewportHeight );
 
 	// Init sceneManager
 	FilePath applicationPath( argv[0] );
 	SceneManager sceneManager;
-	sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager );
+	sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager, viewportWidth, viewportHeight );
 
 
   // Display loop
@@ -69,7 +67,26 @@ int main( int argc, char** argv ) {
 
   		if( e.type == SDL_QUIT )
 				done = true;
-			else if ( e.type == SDL_KEYDOWN ) {
+
+      #ifdef __APPLE__
+
+        else if ( e.type == SDL_WINDOWEVENT ) {
+          if ( e.window.event == SDL_WINDOWEVENT_RESIZED ) {
+            sceneManager.updateViewportDimensions( e.window.data1, e.window.data2 );
+            inputManager.updateViewportDimensions( e.window.data1, e.window.data2 );
+          }
+        }
+
+      #else
+
+        else if ( e.type == SDL_VIDEORESIZE ) {
+          sceneManager.updateViewportDimensions( e.resize.w, e.resize.h );
+          inputManager.updateViewportDimensions( e.resize.w, e.resize.h );
+        }
+
+      #endif
+        
+      else if ( e.type == SDL_KEYDOWN ) {
 
 				#ifdef __APPLE__
 	      	SDL_Keycode keyPressed = e.key.keysym.sym;

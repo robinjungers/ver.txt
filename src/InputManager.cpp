@@ -12,7 +12,7 @@ using namespace glm;
 GLint InputManager::m_uIsText = 0;
 GLint InputManager::m_uMVPMatrix = 0;
 
-InputManager::InputManager() : m_fontTexture( "font.png" ) {
+InputManager::InputManager( float viewportWidth, float viewportHeight ) : m_fontTexture( "font.png" ) {
 
   m_inputValue = "ver.txt";
   m_index = 0;
@@ -24,13 +24,18 @@ InputManager::InputManager() : m_fontTexture( "font.png" ) {
     m_letters.push_back(letter);
   }
 
+  // Initialise display matrix
+  updateViewportDimensions( viewportWidth, viewportHeight );
+
 }
 
 void InputManager::getUniformLocations( Program &program ) {
-
   m_uIsText = glGetUniformLocation( program.getGLId(), "uIsText" );
   m_uMVPMatrix = glGetUniformLocation( program.getGLId(), "uMVPMatrix" );
+}
 
+void InputManager::updateViewportDimensions( float viewportWidth, float viewportHeight ) {
+  m_MVPMatrix = scale(mat4(1), vec3( 0.1, 0.1 * viewportWidth / viewportHeight, 0.1 ));
 }
 
 void InputManager::addToInput( char c ) {
@@ -95,8 +100,7 @@ void InputManager::display() {
 
   unsigned nbLetters = m_inputValue.size();
 
-  glm::mat4 MVPMatrix = scale(mat4(1), vec3( 0.1, 0.1, 0.1 ));
-  MVPMatrix = translate( MVPMatrix, vec3( -( nbLetters * 0.5 ), 0.5, 0.0 ) );
+  glm::mat4 MVPMatrix = translate( m_MVPMatrix, vec3( -( nbLetters * 0.5 ), 0.5, 0.0 ) );
 
   for ( unsigned i = 0; i < nbLetters; ++i ) {
 

@@ -17,14 +17,17 @@ class InputManager {
     std::vector<std::string> m_inputEntries;
     std::vector<Letter> m_letters;
 
+    glm::mat4 m_MVPMatrix;
+
     static GLint m_uMVPMatrix;
     static GLint m_uIsText;
     Texture m_fontTexture;
 
   public:
-    InputManager();
+    InputManager( float viewportWidth, float viewportHeight );
 
     static void getUniformLocations( Program &program );
+    void updateViewportDimensions( float viewportWidth, float viewportHeight );
 
     void addToInput( char c );
     void addToInput( std::string s );

@@ -41,8 +41,9 @@ class SceneManager {
   public:
     SceneManager();
     ~SceneManager();
-    void loadSceneFromFile( FilePath srcPath, std::string filePath, InputManager &inputManager );
+    void loadSceneFromFile( FilePath srcPath, std::string filePath, InputManager &inputManager, float viewportWidth, float viewportHeight );
 
+    void updateViewportDimensions( float viewportWidth, float viewportHeight );
     void setCurrentScene( unsigned index );
 
     void draw();

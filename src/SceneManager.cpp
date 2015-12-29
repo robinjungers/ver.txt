@@ -26,7 +26,7 @@ SceneManager::~SceneManager() {
 }
 
 
-void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputManager &inputManager ) {
+void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputManager &inputManager, float viewportWidth, float viewportHeight ) {
 
   Scene * scene;
 
@@ -45,7 +45,7 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
 
       string sceneName, vsPath, fsPath;
       lineStream >> sceneName >> vsPath >> fsPath;
-      scene = new Scene( sceneName, srcPath.dirPath() + vsPath, srcPath.dirPath() + fsPath );
+      scene = new Scene( sceneName, srcPath.dirPath() + vsPath, srcPath.dirPath() + fsPath, viewportWidth, viewportHeight );
       inputManager.addEntry( sceneName );
 
     }
@@ -153,6 +153,15 @@ void SceneManager::loadSphereFromFileLine( Scene * scene, istringstream &lineStr
 }
 
 
+
+void SceneManager::updateViewportDimensions( float viewportWidth, float viewportHeight ) {
+
+  glViewport(0, 0, viewportWidth, viewportHeight);
+
+  for ( unsigned i = 0; i < m_scenes.size(); ++i )
+    m_scenes[i]->setViewportDimensions( viewportWidth, viewportHeight );
+
+}
 
 void SceneManager::setCurrentScene( unsigned index ) {
 
