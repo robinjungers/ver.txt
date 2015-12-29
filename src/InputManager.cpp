@@ -40,17 +40,11 @@ void InputManager::updateViewportDimensions( float viewportWidth, float viewport
 
 void InputManager::addToInput( char c ) {
 
-
+  if ( c >= 'A' && c <= 'Z' )
+    c = c - 'A' + asciiLettersOffset;
 
   if ( m_inputValue.size() < maxLetters )
     m_inputValue += c;
-
-}
-
-void InputManager::addToInput( std::string s ) {
-
-  if ( m_inputValue.size() < maxLetters )
-    m_inputValue += s;
 
 }
 

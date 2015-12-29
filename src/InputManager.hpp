@@ -6,7 +6,7 @@
 #include "Letter.hpp"
 
 const unsigned maxLetters = 12;
-const unsigned asciiLettersOffset = 97;
+const unsigned asciiLettersOffset = 'a';
 
 class InputManager {
 
@@ -30,7 +30,6 @@ class InputManager {
     void updateViewportDimensions( float viewportWidth, float viewportHeight );
 
     void addToInput( char c );
-    void addToInput( std::string s );
     void deleteLastChar();
 
     void addEntry( std::string entry );
