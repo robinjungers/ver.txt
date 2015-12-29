@@ -14,13 +14,14 @@ GLint InputManager::m_uMVPMatrix = 0;
 
 InputManager::InputManager( float viewportWidth, float viewportHeight ) : m_fontTexture( "font.png" ) {
 
-  m_inputValue = "ver.txt";
+  m_inputValue = "VER.TXT";
   m_index = 0;
 
   // Initialise bitmap font
   for ( unsigned i = 0; i < 27; i++ ) {
     Letter letter( i );
     letter.setTexture( &m_fontTexture );
+    letter.setMaterial( new Material( vec3( 1.0, 1.0, 1.0 ), vec3(0), 0 ) );
     m_letters.push_back(letter);
   }
 
@@ -70,6 +71,21 @@ unsigned InputManager::getIndex() {
 
 }
 
+std::string InputManager::getInputValue() {
+
+  return m_inputValue;
+
+}
+float InputManager::getInputValueHash() {
+
+  float hash = 0.0;
+  for ( unsigned i = 0; i < m_inputValue.size(); ++i )
+    hash += 0.002 * ((int) m_inputValue[i]);
+
+  return hash;
+
+}
+
 
 
 bool InputManager::validate() {
@@ -101,7 +117,7 @@ void InputManager::display() {
     unsigned char character = m_inputValue[i];
 
     glUniformMatrix4fv( m_uMVPMatrix, 1, GL_FALSE, value_ptr( MVPMatrix ) );
-    
+
     if ( character == '.' )
       m_letters[ 26 ].draw();
     else

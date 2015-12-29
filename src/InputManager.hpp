@@ -6,7 +6,12 @@
 #include "Letter.hpp"
 
 const unsigned maxLetters = 12;
-const unsigned asciiLettersOffset = 'a';
+
+#ifdef __APPLE__
+  const unsigned asciiLettersOffset = 65;
+#else
+  const unsigned asciiLettersOffset = 'a';
+#endif
 
 class InputManager {
 
@@ -35,6 +40,8 @@ class InputManager {
     void addEntry( std::string entry );
 
     unsigned getIndex();
+    std::string getInputValue();
+    float getInputValueHash();
 
     bool validate();
     void display();

@@ -5,13 +5,10 @@
 
 class Quad : public Object3D {
 
-  private:
-    void buildVertices();
-
   public:
     Quad();
+    void buildVertices();
 
-  	void transition();
     void animation();
 
 };

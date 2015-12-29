@@ -118,6 +118,20 @@ void Scene::addTexture( string fileTexture ) {
 
 
 // Displayer
+bool Scene::update() {
+  bool isUpdating = true;
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i ) {
+    if ( !m_objects3D[i]->transition() )
+      isUpdating = false;
+  }
+  return isUpdating;
+}
+
+void Scene::animate() {
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i )
+    m_objects3D[i]->animation();
+}
+
 void Scene::draw() {
 
   m_camera->moveOnPath();
@@ -149,10 +163,17 @@ void Scene::clear() {
 
 }
 
-
-void Scene::showUp() {
-  // Transitions graphiques
+void Scene::triggerFadeIn() {
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i )
+    m_objects3D[i]->pushFadingParameter( 1.0 );
 }
-void Scene::shutDown() {
-  // Transitions graphiques
+
+void Scene::triggerFadeOut() {
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i )
+    m_objects3D[i]->pushFadingParameter( 0.0 );
+}
+
+void Scene::triggerMorphing( float parameter ) {
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i )
+    m_objects3D[i]->pushMorphingParameter( parameter );
 }

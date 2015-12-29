@@ -1,6 +1,8 @@
 #include "Object3D.hpp"
+#include "tools.hpp"
 
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 using namespace glimac;
@@ -10,6 +12,10 @@ Object3D::Object3D() {
   m_position = vec3( 0.0, 0.0, 0.0 );
   m_rotation = vec3( 0.0, 0.0, 0.0 );
   m_scale = vec3( 0.0, 0.0, 0.0 );
+  m_morphingParameter = 0.0;
+  m_fadingParameter = 1.0;
+  m_currentMorphingParameter = 0.0;
+  m_currentFadingParameter = 0.0;
 }
 
 void Object3D::initVertices() {
@@ -73,6 +79,13 @@ void Object3D::setTexture( Texture * texture ) {
   m_texture = texture;
 }
 
+void Object3D::pushMorphingParameter( float morphingParameter ) {
+  m_morphingParameter = morphingParameter;
+}
+void Object3D::pushFadingParameter( float fadingParameter ) {
+  m_fadingParameter = fadingParameter;
+}
+
 
 
 vec3 Object3D::getPosition() {
@@ -102,5 +115,21 @@ void Object3D::draw() {
   // Debinding
   m_texture->debindTexture();
   glBindVertexArray(0);
+
+}
+
+bool Object3D::transition() {
+
+  float step = 0.01;
+
+  if ( (fabs(m_morphingParameter - m_currentMorphingParameter) < step ) && (fabs(m_fadingParameter - m_currentFadingParameter) < step ) ) return false;
+
+	ease( m_currentFadingParameter, m_fadingParameter, 0.01 );
+	ease( m_currentMorphingParameter, m_morphingParameter, 0.01 );
+
+  buildVertices();
+	initVertices();
+
+	return true;
 
 }

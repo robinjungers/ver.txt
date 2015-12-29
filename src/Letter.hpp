@@ -9,12 +9,10 @@ class Letter : public Object3D {
   private:
   	unsigned char m_index;
 
-    void buildVertices();
-
   public:
     Letter( unsigned char index );
+    void buildVertices();
 
-  	void transition();
     void animation();
 
 };

@@ -6,12 +6,15 @@
 class Sphere: public Object3D {
 
   private:
-    void buildVertices( GLfloat r, GLsizei discLat, GLsizei discLong );
+    GLfloat m_r;
+    GLsizei m_discLat;
+    GLsizei m_discLong;
 
   public:
-    Sphere( GLfloat r = 1, GLsizei discLat = 32, GLsizei discLong = 16 );
+    Sphere();
+    Sphere( GLfloat r, GLsizei discLat, GLsizei discLong );
+    void buildVertices();
 
-    void transition();
     void animation();
 
 };

@@ -17,7 +17,7 @@
 class Scene {
 
   private:
-    string m_name;
+    std::string m_name;
     Program m_program;
 
     GLint m_uMVPMatrix;
@@ -30,8 +30,8 @@ class Scene {
 
     std::vector<Object3D*> m_objects3D;
     std::vector<Light*> m_lights;
-    std::vector<Material> m_materials; 
-    std::vector<Texture> m_textures; 
+    std::vector<Material> m_materials;
+    std::vector<Texture> m_textures;
 
     Material m_defaultMaterial;
     Texture m_defaultTexture;
@@ -57,9 +57,13 @@ class Scene {
     void removeAllObjects3D();
     void removeAllLights();
 
+    void triggerFadeIn();
+    void triggerFadeOut();
+    void triggerMorphing( float parameter );
+
+    bool update();
+    void animate();
     void draw();
     void clear();
-    void showUp();
-    void shutDown();
 
 };

@@ -18,9 +18,15 @@ class Object3D {
     glm::vec3 m_rotation;
     glm::vec3 m_scale;
 
+    float m_morphingParameter;
+    float m_fadingParameter;
+    float m_currentMorphingParameter;
+    float m_currentFadingParameter;
+
   protected:
     std::vector<glimac::ShapeVertex> m_vertices;
 
+    virtual void buildVertices() = 0;
     void initVertices();
 
   public:
@@ -34,11 +40,14 @@ class Object3D {
     void setMaterial( Material * material );
     void setTexture( Texture * texture );
 
+    void pushMorphingParameter( float morphingParameter );
+    void pushFadingParameter( float fadingParameter );
+
     glm::vec3 getPosition();
     glm::vec3 getRotation();
     glm::vec3 getScale();
 
-    virtual void transition() = 0;
+    bool transition();
     virtual void animation() = 0;
 
     void draw();

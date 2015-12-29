@@ -3,6 +3,7 @@
 #include <glimac/glm.hpp>
 
 #include "Sphere.hpp"
+#include "Terrain.hpp"
 #include "Light.hpp"
 #include "Material.hpp"
 #include "Texture.hpp"
@@ -15,6 +16,7 @@ using namespace glm;
 SceneManager::SceneManager() {
 
   m_currentScene = 0;
+  m_state = SCENE_TRANSITION;
 
 }
 
@@ -73,6 +75,10 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
     // Ajout Sphère
     else if ( lineHead == "SPHERE:" )
       loadSphereFromFileLine( scene, lineStream );
+
+    // Ajout terrain
+    else if ( lineHead == "TERRAIN:" )
+      loadTerrainFromFileLine( scene, lineStream );
 
 
   }
@@ -149,6 +155,22 @@ void SceneManager::loadSphereFromFileLine( Scene * scene, istringstream &lineStr
     scene->addObject3D( sphere );
   }
 
+}
+
+void SceneManager::loadTerrainFromFileLine( Scene * scene, istringstream &lineStream ) {
+
+  int materialId, textureId;
+  lineStream >> materialId >> textureId;
+
+  Terrain * terrain = new Terrain();
+  if ( materialId >= 0 ) {
+    if ( textureId >= 0 )
+      scene->addObject3D( terrain, materialId, textureId );
+    else
+      scene->addObject3D( terrain, materialId );
+  } else {
+    scene->addObject3D( terrain );
+  }
 
 }
 
@@ -170,8 +192,32 @@ void SceneManager::setCurrentScene( unsigned index ) {
 }
 
 
+void SceneManager::fadeIn() {
+  m_state = SCENE_TRANSITION;
+  m_scenes[ m_currentScene ]->triggerFadeIn();
+}
+void SceneManager::fadeOut() {
+  m_state = SCENE_TRANSITION;
+  m_scenes[ m_currentScene ]->triggerFadeOut();
+}
+void SceneManager::morphing( float parameter ) {
+  m_state = SCENE_TRANSITION;
+  m_scenes[ m_currentScene ]->triggerMorphing( parameter );
+}
+
+
 
 void SceneManager::draw() {
+
+  m_scenes[ m_currentScene ]->setAmbientColor( vec3( 1.0, 1.0, 1.0 ) );
+
+  if ( m_state == SCENE_TRANSITION ) {
+    bool isUpdating = m_scenes[ m_currentScene ]->update();
+    if ( !isUpdating )
+      m_state = SCENE_ANIMATION;
+  } else {
+    m_scenes[ m_currentScene ]->animate();
+  }
 
   m_scenes[ m_currentScene ]->draw();
 

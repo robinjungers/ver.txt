@@ -52,11 +52,6 @@ void Letter::buildVertices() {
 
 }
 
-void Letter::transition() {
-
-
-
-}
 
 void Letter::animation() {
 
