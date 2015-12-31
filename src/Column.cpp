@@ -17,37 +17,37 @@ void Column::buildVertices() {
 //face de devant
 
     vertex.position = vec3(-1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0, 1.0, 0.0);
     vertex.texCoords = vec2(0.0, 1.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(-1.0, 3.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0, 1.0, 0.0);
     vertex.texCoords = vec2(0.0, 0.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.0, 3.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0, 1.0, 0.0);
     vertex.texCoords = vec2(1.0, 0.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.0, 3.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0, 1.0, 0.0); 
     vertex.texCoords = vec2(1.0, 0.0);
 
     m_vertices.push_back(vertex);
             
     vertex.position = vec3(1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0,1.0, 0.0); 
     vertex.texCoords = vec2(1.0, 1.0);
 
     m_vertices.push_back(vertex);
         
     vertex.position = vec3(-1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0,1.0, 0.0); 
     vertex.texCoords = vec2(0.0, 1.0);
 
     m_vertices.push_back(vertex);
@@ -55,73 +55,73 @@ void Column::buildVertices() {
 // face de dessous 
 
     vertex.position = vec3(-1.0, -1.0, -1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0);  
+    vertex.normal= vec3(0.0,1.0,0.0);
     vertex.texCoords = vec2(1.0, 0.0); 
 
     m_vertices.push_back(vertex); 
 
     vertex.position = vec3(-1.5, -1.0, 0.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0);  
+    vertex.normal= vec3(0.0,1.0,0.0);   
     vertex.texCoords = vec2(0.0, 0.0); 
 
     m_vertices.push_back(vertex); 
    
     vertex.position = vec3(-1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0,1.0,0.0);  
     vertex.texCoords = vec2(0.0, 1.0); 
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(-1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0,1.0,0.0);  
     vertex.texCoords = vec2(0.0, 1.0); 
 
     m_vertices.push_back(vertex);   
 
     vertex.position = vec3(-1.0, -1.0, -1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0);  
+    vertex.normal= vec3(0.0,1.0,0.0);   
     vertex.texCoords = vec2(0.0, 0.0); 
 
     m_vertices.push_back(vertex);  
 
     vertex.position = vec3(1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0,1.0,0.0);  
     vertex.texCoords = vec2(1.0, 1.0); 
 
     m_vertices.push_back(vertex);  
 
     vertex.position = vec3(1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0);  
+    vertex.normal= vec3(0.0,1.0,0.0);   
     vertex.texCoords = vec2(1.0, 1.0); 
 
     m_vertices.push_back(vertex);  
 
     vertex.position = vec3(1.0, -1.0, -1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0,1.0,0.0);  
     vertex.texCoords = vec2(1.0, 0.0);
 
     m_vertices.push_back(vertex);  
 
     vertex.position = vec3(-1.0, -1.0, -1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0);  
+    vertex.normal= vec3(0.0,1.0,0.0);   
     vertex.texCoords = vec2(0.0, 0.0); 
 
     m_vertices.push_back(vertex);  
 
     vertex.position = vec3(1.0, -1.0, -1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0); 
+    vertex.normal= vec3(0.0,1.0,0.0);  
     vertex.texCoords = vec2(1.0, 0.0);
 
     m_vertices.push_back(vertex);  
 
     vertex.position = vec3(1.5, -1.0, 0.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0);  
+    vertex.normal= vec3(0.0,1.0,0.0);   
     vertex.texCoords = vec2(0.0, 1.0); 
 
     m_vertices.push_back(vertex); 
 
     vertex.position = vec3(1.0, -1.0, 1.0);
-    vertex.normal= vec3(0.0, 0.0, -1.0);  
+    vertex.normal= vec3(0.0,1.0,0.0);   
     vertex.texCoords = vec2(1.0, 1.0); 
 
     m_vertices.push_back(vertex); 
@@ -205,45 +205,45 @@ void Column::buildVertices() {
 // face de derrière  
 
     vertex.position = vec3(-1.0, -1.0, -1.0);
-    vertex.normal= vec3(0.0, 0.0, 0.0); 
-    vertex.texCoords = vec2(1.0, 0.0); 
+    vertex.normal= vec3(0.0,1.0, 0.0); 
+    vertex.texCoords = vec2(0.0,1.0); 
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(-1.0, 3.0, -1.0 );
     vertex.normal = vec3( 0.0, 1.0, 0.0 );
-    vertex.texCoords = vec2( 1.0, 1.0 );
+    vertex.texCoords = vec2(0.0,0.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.0, 3.0, -1.0);
     vertex.normal = vec3( 0.0, 1.0, 0.0 );
-    vertex.texCoords = vec2(0.0, 1.0 );
+    vertex.texCoords = vec2(1.0,0.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.0, 3.0, -1.0);
-    vertex.normal = vec3(0.0, 1.0, 0.0 );
-    vertex.texCoords = vec2(0.0, 1.0 );
+    vertex.normal = vec3(0.0,1.0, 0.0);
+    vertex.texCoords = vec2(1.0,0.0);
 
     m_vertices.push_back(vertex);
  
     vertex.position = vec3(-1.0, -1.0,-1.0 );
     vertex.normal = vec3( 0.0, 1.0, 0.0 );
-    vertex.texCoords = vec2( 1.0, 0.0 );
+    vertex.texCoords = vec2(0.0,1.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.0, -1.0,-1.0 );
     vertex.normal = vec3( 0.0, 1.0, 0.0 );
-    vertex.texCoords = vec2( 0.0, 0.0 );
+    vertex.texCoords = vec2(1.0,1.0);
 
     m_vertices.push_back(vertex);
 
 // face de droite - devant 
 
     vertex.position = vec3(1.0, -1.0, 1.0);
-    vertex.normal = vec3(0.0, 1.0, 0.0 );
+    vertex.normal = vec3(1.0, 1.0, 0.0 );
     vertex.texCoords = vec2( 0.0, 1.0 );
 
     m_vertices.push_back(vertex);
@@ -281,37 +281,37 @@ void Column::buildVertices() {
 // face de droite - derriere
 
     vertex.position = vec3(1.0, -1.0, -1.0);
-    vertex.normal = vec3(0.0, 1.0,0.0);
+    vertex.normal = vec3(0.0,1.0,0.0);
     vertex.texCoords = vec2(1.0,1.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.0, 3.0, -1.0);
-    vertex.normal = vec3(0.0, 1.0, 0.0 );
+    vertex.normal = vec3(0.0,1.0,0.0);
     vertex.texCoords = vec2(1.0,0.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.5, 3.0, 0.0);
-    vertex.normal = vec3(0.0, 1.0, 0.0 );
+    vertex.normal = vec3(0.0, 1.0, 0.0);
     vertex.texCoords = vec2(0.0,0.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.5, 3.0, 0.0);
-    vertex.normal = vec3(0.0, 1.0, 0.0 );
+    vertex.normal = vec3(0.0,1.0,0.0);
     vertex.texCoords = vec2(0.0,.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.5, -1.0, 0.0);
-    vertex.normal = vec3(0.0, 1.0, 0.0);
+    vertex.normal = vec3(0.0,1.0,0.0);
     vertex.texCoords = vec2(0.0,1.0);
 
     m_vertices.push_back(vertex);
 
     vertex.position = vec3(1.0, -1.0, -1.0);
-    vertex.normal = vec3(0.0, 1.0, 0.0 );
+    vertex.normal = vec3(0.0,1.0,0.0);
     vertex.texCoords = vec2(1.0,1.0);
 
     m_vertices.push_back(vertex);
@@ -389,10 +389,6 @@ void Column::buildVertices() {
     vertex.texCoords = vec2(1.0, 1.0); 
 
     m_vertices.push_back(vertex); 
-}
-
-void Column::transition() {
-
 }
 
 void Column::animation() {

@@ -2,15 +2,13 @@
 
 #include "Object3D.hpp"
 
-class Column: public Object3D{
-
-  private:
-    void buildVertices();
+class Column: public Object3D {
 
    public:
 	Column();
 
-	void transition();
-    void animation();
+	void buildVertices();
+    
+	void animation();
 
 };

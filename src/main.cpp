@@ -2,145 +2,159 @@
 
 #include <GL/glew.h>
 
+#include <iostream>
+
+#include <GL/glew.h>
+
 #ifdef __APPLE__
-	#include <glimac/SDLAppleWindowManager.hpp>
+  #include <glimac/SDLAppleWindowManager.hpp>
 #else
-	#include <glimac/SDLWindowManager.hpp>
+  #include <glimac/SDLWindowManager.hpp>
 #endif
 
 #include <glimac/Program.hpp>
 #include <glimac/FilePath.hpp>
 
-#include "Quad.hpp" // Pour test
-#include "TrackballCamera.hpp"
-#include "Sphere.hpp"
-#include "Texture.hpp"
-#include "Light.hpp"
-
-
+#include "InputManager.hpp"
+#include "SceneManager.hpp"
 
 using namespace glimac;
 using namespace glm;
 
+const unsigned viewportWidth = 800, viewportHeight = 600; // Viewport dimensions
+const float FRAME_DURATION = 1000 / 60; // Frame duration
+
 
 int main( int argc, char** argv ) {
 
-	// Initialize SDL and open a window
-	SDLWindowManager windowManager(800, 600, "GLImac");
-
-	// Initialize glew for OpenGL3+ support
-	glewExperimental = GL_TRUE;
-	GLenum glewInitError = glewInit();
-	if( GLEW_OK != glewInitError ) {
-		std::cerr << glewGetErrorString(glewInitError) << std::endl;
-		return EXIT_FAILURE;
-	}
-	std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
-	std::cout << "GLEW Version   : " << glewGetString(GLEW_VERSION) << std::endl;
+  // Initialize SDL and open a window
+  SDLWindowManager windowManager( viewportWidth, viewportHeight, "" );
 
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////// Pour tests
+  #ifndef __APPLE__
+    SDL_EnableKeyRepeat( 400, 100 );
+    SDL_EnableUNICODE(SDL_ENABLE);
+  #endif
 
-	// Shaders
-	FilePath applicationPath(argv[0]);
-    Program program = loadProgram(
-        applicationPath.dirPath() + "shaders/default.vs.glsl",
-        applicationPath.dirPath() + "shaders/default.fs.glsl"
-    );
-    program.use();
+  // Initialize glew for OpenGL3+ support
+  glewExperimental = GL_TRUE;
+  GLenum glewInitError = glewInit();
+  if( GLEW_OK != glewInitError ) {
+    std::cerr << glewGetErrorString( glewInitError ) << std::endl;
+    return EXIT_FAILURE;
+  }
+  std::cout << "OpenGL Version : " << glGetString( GL_VERSION ) << std::endl;
+  std::cout << "GLEW Version   : " << glewGetString( GLEW_VERSION ) << std::endl;
 
-    // Z-buffer
-    glEnable(GL_DEPTH_TEST);
+  // Enable OpenGL blending
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // Test objects
-    Quad monQuad;
+  // Frame duration
+  const float FRAME_DURATION = 1000 / 60;
 
-    // Test camera
-    TrackballCamera maCamera(6000);
-    TrackballPosition maPosition;
-    maPosition.distance = 5.0;
-    maPosition.angleX = 45.0;
-    maPosition.angleY = 0.0;
-    maCamera.addControlPoint( maPosition );
-    maPosition.distance = 5.0;
-    maPosition.angleX = 45.0;
-    maPosition.angleY = 180.0;
-    maCamera.addControlPoint( maPosition );
-    maPosition.distance = 5.0;
-    maPosition.angleX = 45.0;
-    maPosition.angleY = 360.0;
-    maCamera.addControlPoint( maPosition );
+  // Init inputManager
+  InputManager inputManager( viewportWidth, viewportHeight );
 
-    // Matrices de projection...
-    GLint uMVPMatrix = glGetUniformLocation( program.getGLId(), "uMVPMatrix" );
-    GLint uMVMatrix = glGetUniformLocation( program.getGLId(), "uMVMatrix" );
-    GLint uNormalMatrix = glGetUniformLocation( program.getGLId(), "uNormalMatrix" );
-    mat4 ProjMatrix = perspective( radians(70.f), 800.f/600.f, 0.1f, 100.f );
-    mat4 MVMatrix;
-    mat4 NormalMatrix;
-
-    // Test texture
-    Texture maTexture( "lol.jpg", program );
-
-    // Test light
-    PointLight maLight( vec3( 0.0, 5.0, -5.0 ) );
-    maLight.setIntensity( vec3( 25.0, 25.0, 25.0 ) );
-    maLight.getUniformLocations( program );
-
-    // Test material
-    Material monMaterial( vec3( 1.0, 1.0, 1.0 ),
-                          vec3( 1.0, 1.0, 1.0 ),
-                          30.0 );
-    monMaterial.getUniformLocations( program );
-    monMaterial.sendUniformValues();
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Init sceneManager
+  FilePath applicationPath( argv[0] );
+  SceneManager sceneManager;
+  sceneManager.loadSceneFromFile( applicationPath, "ver.test.txt", inputManager, viewportWidth, viewportHeight );
 
 
-	glEnable(GL_DEPTH_TEST);
+  // Display loop
+  bool done = false;
+  float timer = 0.0;
+  while( !done ) {
 
-	// Graphic objects
-	Sphere mySphere;
+    // Used for frame rate cap
+    Uint32 startTime = SDL_GetTicks();
 
-	// Display loop
-	bool done = false;
-	while( !done ) {
 
-		SDL_Event e;
-    	while( windowManager.pollEvent( e ) ) {
-    	if( e.type == SDL_QUIT )
-				done = true;
+    // Events
+    SDL_Event e;
+    while( windowManager.pollEvent( e ) ) {
+
+      if( e.type == SDL_QUIT )
+        done = true;
+
+      #ifdef __APPLE__
+
+        else if ( e.type == SDL_WINDOWEVENT ) {
+          if ( e.window.event == SDL_WINDOWEVENT_RESIZED ) {
+            sceneManager.updateViewportDimensions( e.window.data1, e.window.data2 );
+            inputManager.updateViewportDimensions( e.window.data1, e.window.data2 );
+          }
         }
 
+      #else
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////// Pour tests
-    	
-        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+        else if ( e.type == SDL_VIDEORESIZE ) {
+          sceneManager.updateViewportDimensions( e.resize.w, e.resize.h );
+          inputManager.updateViewportDimensions( e.resize.w, e.resize.h );
+        }
 
-    	// Camera
-    	maCamera.moveOnPath();
-    	MVMatrix = maCamera.getViewMatrix();
-        NormalMatrix = transpose( inverse( MVMatrix ) );
+      #endif
 
-        glUniformMatrix4fv( uMVPMatrix, 1, GL_FALSE, value_ptr( ProjMatrix * MVMatrix ) );
-        glUniformMatrix4fv( uMVMatrix, 1, GL_FALSE, value_ptr( MVMatrix ) );
-        glUniformMatrix4fv( uNormalMatrix, 1, GL_FALSE, value_ptr( NormalMatrix ) );
+      else if ( e.type == SDL_KEYDOWN ) {
 
-        maLight.sendUniformValues( MVMatrix );
+        #ifdef __APPLE__
+          SDL_Keycode keyPressed = e.key.keysym.sym;
+        #else
+          SDLKey keyPressed = e.key.keysym.sym;
+        #endif
 
-        maTexture.bindTexture();
+        switch ( keyPressed ) {
 
-        monQuad.draw();
-        // mySphere.draw();
+          case SDLK_ESCAPE:
+            done = true;
+            break;
 
-        maTexture.debindTexture();
+          case SDLK_RETURN:
+            if ( inputManager.validate() )
+              sceneManager.fadeOut();
+            else
+              sceneManager.morphing( inputManager.getInputValueHash() );
+            break;
 
-        windowManager.swapBuffers();
+          case SDLK_BACKSPACE:
+            inputManager.deleteLastChar();
+            break;
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) ) {
+          #ifdef __APPLE__
+            string keyValue = SDL_GetKeyName( keyPressed );
+            inputManager.addToInput( keyValue[0] );
+          #else
+            inputManager.addToInput( e.key.keysym.unicode );
+          #endif
+        }
+
+      }
+    }
 
 
-	}
+    // Draw
+    sceneManager.clear();
+    sceneManager.draw();
 
-	return EXIT_SUCCESS;
+    inputManager.display();
+
+
+    // Swap
+    windowManager.swapBuffers();
+
+
+    // Frame rate cap
+    timer += 0.01;
+    Uint32 elapsedTime = SDL_GetTicks() - startTime;
+
+    if(elapsedTime < FRAME_DURATION)
+      SDL_Delay(FRAME_DURATION - elapsedTime);
+
+  }
+
+  return EXIT_SUCCESS;
 }

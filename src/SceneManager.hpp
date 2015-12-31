@@ -38,6 +38,7 @@ class SceneManager {
     void loadTextureFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadSphereFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadTerrainFromFileLine( Scene * scene, std::istringstream &lineStream );
+    void loadColumnFromFileLine( Scene * scene, std::istringstream &lineStream );
 
   public:
     SceneManager();
