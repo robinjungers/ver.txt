@@ -14,14 +14,19 @@ GLint InputManager::m_uMVPMatrix = 0;
 
 InputManager::InputManager( float viewportWidth, float viewportHeight ) : m_fontTexture( "font.png" ) {
 
-  m_inputValue = "VER.TXT";
+  #ifdef __APPLE__
+    m_inputValue = "VER.TXT";
+  #else
+    m_inputValue = "ver.txt";
+  #endif
+    
   m_index = 0;
 
   // Initialise bitmap font
   for ( unsigned i = 0; i < 27; i++ ) {
     Letter letter( i );
     letter.setTexture( &m_fontTexture );
-    letter.setMaterial( new Material( vec3( 1.0, 1.0, 1.0 ), vec3(0), 0 ) );
+    letter.setMaterial( new Material( vec3(1), vec3(0), 0 ) );
     m_letters.push_back(letter);
   }
 
@@ -76,6 +81,7 @@ std::string InputManager::getInputValue() {
   return m_inputValue;
 
 }
+
 float InputManager::getInputValueHash() {
 
   float hash = 0.0;

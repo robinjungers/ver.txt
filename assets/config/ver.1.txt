@@ -5,3 +5,4 @@ MATERIAL:         0.05 0.05 0.05 0.1 0.1 0.1 10000000.0
 TEXTURE:          lol.jpg
 TEXTURE:          terrain4.png
 TERRAIN:          0 1
+TESSERACT:				-1 -1

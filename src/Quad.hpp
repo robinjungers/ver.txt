@@ -3,7 +3,7 @@
 #include "Object3D.hpp"
 
 
-class Quad : public Object3D {
+class Quad : public Solid {
 
   public:
     Quad();

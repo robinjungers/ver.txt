@@ -52,7 +52,6 @@ void Quad::buildVertices() {
 
 }
 
-
 void Quad::animation() {
 
 

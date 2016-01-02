@@ -70,7 +70,6 @@ void Sphere::buildVertices() {
 
 }
 
-
 void Sphere::animation() {
 
 }

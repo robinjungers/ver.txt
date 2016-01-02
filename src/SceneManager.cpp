@@ -4,6 +4,7 @@
 
 #include "Sphere.hpp"
 #include "Terrain.hpp"
+#include "Tesseract.hpp"
 #include "Light.hpp"
 #include "Material.hpp"
 #include "Texture.hpp"
@@ -79,6 +80,10 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
     // Ajout terrain
     else if ( lineHead == "TERRAIN:" )
       loadTerrainFromFileLine( scene, lineStream );
+
+    // Ajout tesseract
+    else if ( lineHead == "TESSERACT:" )
+      loadTesseractFromFileLine( scene, lineStream );
 
 
   }
@@ -171,6 +176,22 @@ void SceneManager::loadTerrainFromFileLine( Scene * scene, istringstream &lineSt
   } else {
     scene->addObject3D( terrain );
   }
+
+}
+
+void SceneManager::loadTesseractFromFileLine( Scene * scene, istringstream &lineStream ) {
+
+  int materialId, textureId;
+  lineStream >> materialId >> textureId;
+
+  Tesseract * tesseract = new Tesseract();
+  if ( materialId >= 0 ) {
+    if ( textureId >= 0 )
+      scene->addObject3D( tesseract, materialId, textureId );
+    else
+      scene->addObject3D( tesseract, materialId );
+  } else
+    scene->addObject3D( tesseract );
 
 }
 

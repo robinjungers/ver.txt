@@ -100,24 +100,6 @@ vec3 Object3D::getScale() {
 
 
 
-void Object3D::draw() {
-
-  // Binding
-  glBindVertexArray( m_vao );
-  m_texture->bindTexture();
-
-  // Variables uniformes
-  m_material->sendUniformValues();
-
-  // Dessin
-  glDrawArrays( GL_TRIANGLES, 0, m_vertices.size() );
-
-  // Debinding
-  m_texture->debindTexture();
-  glBindVertexArray(0);
-
-}
-
 bool Object3D::transition() {
 
   float step = 0.01;
@@ -131,5 +113,26 @@ bool Object3D::transition() {
 	initVertices();
 
 	return true;
+
+}
+
+
+
+
+void Solid::draw() {
+
+  // Binding
+  glBindVertexArray( m_vao );
+  m_texture->bindTexture();
+
+  // Uniforms
+  m_material->sendUniformValues();
+
+  // Drawing
+  glDrawArrays( GL_TRIANGLES, 0, m_vertices.size() );
+
+  // Debinding
+  m_texture->debindTexture();
+  glBindVertexArray(0);
 
 }

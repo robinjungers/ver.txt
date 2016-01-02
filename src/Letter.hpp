@@ -4,7 +4,7 @@
 
 const float letterWidth = 1.0 / 27.0;
 
-class Letter : public Object3D {
+class Letter : public Solid {
 
   private:
   	unsigned char m_index;

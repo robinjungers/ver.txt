@@ -1,5 +1,6 @@
 #include "Scene.hpp"
 #include "InputManager.hpp"
+#include "Tesseract.hpp"
 
 #include <iostream>
 
@@ -25,6 +26,7 @@ m_defaultTexture( "default.png" ) {
   Material::getUniformLocations( m_program );
   Texture::getUniformLocations( m_program );
   InputManager::getUniformLocations( m_program );
+  Tesseract::getUniformLocations( m_program );
 
   setViewportDimensions( viewportWidth, viewportHeight );
   

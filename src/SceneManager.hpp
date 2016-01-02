@@ -38,6 +38,7 @@ class SceneManager {
     void loadTextureFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadSphereFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadTerrainFromFileLine( Scene * scene, std::istringstream &lineStream );
+    void loadTesseractFromFileLine( Scene * scene, istringstream &lineStream );
 
   public:
     SceneManager();
@@ -47,9 +48,9 @@ class SceneManager {
     void updateViewportDimensions( float viewportWidth, float viewportHeight );
     void setCurrentScene( unsigned index );
 
-		void fadeIn();
-		void fadeOut();
-		void morphing( float parameter );
+	void fadeIn();
+	void fadeOut();
+	void morphing( float parameter );
 
     void draw();
     void clear();

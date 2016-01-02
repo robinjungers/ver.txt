@@ -3,7 +3,7 @@
 #include "Object3D.hpp"
 
 
-class Terrain : public Object3D {
+class Terrain : public Solid {
 
   private:
     float m_width;

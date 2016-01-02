@@ -50,6 +50,13 @@ class Object3D {
     bool transition();
     virtual void animation() = 0;
 
+    virtual void draw() = 0;
+
+};
+
+class Solid : public Object3D {
+
+  public:
     void draw();
 
 };

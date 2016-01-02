@@ -26,7 +26,6 @@ int main( int argc, char** argv ) {
   // Initialize SDL and open a window
   SDLWindowManager windowManager( viewportWidth, viewportHeight, "" );
 
-
 	#ifndef __APPLE__
 		SDL_EnableKeyRepeat( 400, 100 );
 		SDL_EnableUNICODE(SDL_ENABLE);
@@ -46,8 +45,6 @@ int main( int argc, char** argv ) {
   glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  // Frame duration
-  const float FRAME_DURATION = 1000 / 60;
 
 	// Init inputManager
 	InputManager inputManager( viewportWidth, viewportHeight );
