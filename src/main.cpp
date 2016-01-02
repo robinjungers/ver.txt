@@ -2,10 +2,14 @@
 
 #include <GL/glew.h>
 
+#include <iostream>
+
+#include <GL/glew.h>
+
 #ifdef __APPLE__
-	#include <glimac/SDLAppleWindowManager.hpp>
+  #include <glimac/SDLAppleWindowManager.hpp>
 #else
-	#include <glimac/SDLWindowManager.hpp>
+  #include <glimac/SDLWindowManager.hpp>
 #endif
 
 #include <glimac/Program.hpp>
@@ -26,10 +30,10 @@ int main( int argc, char** argv ) {
   // Initialize SDL and open a window
   SDLWindowManager windowManager( viewportWidth, viewportHeight, "" );
 
-	#ifndef __APPLE__
-		SDL_EnableKeyRepeat( 400, 100 );
-		SDL_EnableUNICODE(SDL_ENABLE);
-	#endif
+  #ifndef __APPLE__
+    SDL_EnableKeyRepeat( 400, 100 );
+    SDL_EnableUNICODE(SDL_ENABLE);
+  #endif
 
   // Initialize glew for OpenGL3+ support
   glewExperimental = GL_TRUE;
@@ -43,33 +47,33 @@ int main( int argc, char** argv ) {
 
   // Enable OpenGL blending
   glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
-	// Init inputManager
-	InputManager inputManager( viewportWidth, viewportHeight );
+  // Init inputManager
+  InputManager inputManager( viewportWidth, viewportHeight );
 
-	// Init sceneManager
-	FilePath applicationPath( argv[0] );
-	SceneManager sceneManager;
-	sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager, viewportWidth, viewportHeight );
+  // Init sceneManager
+  FilePath applicationPath( argv[0] );
+  SceneManager sceneManager;
+  sceneManager.loadSceneFromFile( applicationPath, "ver.test.txt", inputManager, viewportWidth, viewportHeight );
 
 
   // Display loop
   bool done = false;
-	float timer = 0.0;
+  float timer = 0.0;
   while( !done ) {
 
-  	// Used for frame rate cap
-  	Uint32 startTime = SDL_GetTicks();
+    // Used for frame rate cap
+    Uint32 startTime = SDL_GetTicks();
 
 
-  	// Events
-  	SDL_Event e;
-  	while( windowManager.pollEvent( e ) ) {
+    // Events
+    SDL_Event e;
+    while( windowManager.pollEvent( e ) ) {
 
-  		if( e.type == SDL_QUIT )
-				done = true;
+      if( e.type == SDL_QUIT )
+        done = true;
 
       #ifdef __APPLE__
 
@@ -91,39 +95,39 @@ int main( int argc, char** argv ) {
 
       else if ( e.type == SDL_KEYDOWN ) {
 
-				#ifdef __APPLE__
-	      	SDL_Keycode keyPressed = e.key.keysym.sym;
-				#else
-					SDLKey keyPressed = e.key.keysym.sym;
-				#endif
+        #ifdef __APPLE__
+          SDL_Keycode keyPressed = e.key.keysym.sym;
+        #else
+          SDLKey keyPressed = e.key.keysym.sym;
+        #endif
 
-	      switch ( keyPressed ) {
+        switch ( keyPressed ) {
 
-	        case SDLK_ESCAPE:
-	          done = true;
-	        	break;
+          case SDLK_ESCAPE:
+            done = true;
+            break;
 
-					case SDLK_RETURN:
-						if ( inputManager.validate() )
-							sceneManager.fadeOut();
-						else
-							sceneManager.morphing( inputManager.getInputValueHash() );
-						break;
+          case SDLK_RETURN:
+            if ( inputManager.validate() )
+              sceneManager.fadeOut();
+            else
+              sceneManager.morphing( inputManager.getInputValueHash() );
+            break;
 
-					case SDLK_BACKSPACE:
-						inputManager.deleteLastChar();
-						break;
+          case SDLK_BACKSPACE:
+            inputManager.deleteLastChar();
+            break;
 
         }
 
-				if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) ) {
-					#ifdef __APPLE__
-						string keyValue = SDL_GetKeyName( keyPressed );
-						inputManager.addToInput( keyValue[0] );
-					#else
-						inputManager.addToInput( e.key.keysym.unicode );
-					#endif
-				}
+        if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) ) {
+          #ifdef __APPLE__
+            string keyValue = SDL_GetKeyName( keyPressed );
+            inputManager.addToInput( keyValue[0] );
+          #else
+            inputManager.addToInput( e.key.keysym.unicode );
+          #endif
+        }
 
       }
     }
@@ -141,7 +145,7 @@ int main( int argc, char** argv ) {
 
 
     // Frame rate cap
-		timer += 0.01;
+    timer += 0.01;
     Uint32 elapsedTime = SDL_GetTicks() - startTime;
 
     if(elapsedTime < FRAME_DURATION)

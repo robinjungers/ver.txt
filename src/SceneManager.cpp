@@ -10,6 +10,7 @@
 #include "Texture.hpp"
 #include "TrackballCamera.hpp"
 #include "FreeFlyCamera.hpp"
+#include "Column.hpp"
 
 using namespace std;
 using namespace glm;
@@ -85,6 +86,9 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
     else if ( lineHead == "TESSERACT:" )
       loadTesseractFromFileLine( scene, lineStream );
 
+    // Ajout column
+    else if ( lineHead == "COLUMN:" )
+      loadColumnFromFileLine( scene, lineStream );
 
   }
 
@@ -195,7 +199,22 @@ void SceneManager::loadTesseractFromFileLine( Scene * scene, istringstream &line
 
 }
 
+void SceneManager::loadColumnFromFileLine( Scene * scene, std::istringstream &lineStream ){
+  
+  int materialId, textureId;
+  lineStream >> materialId >> textureId;
 
+  Column * column = new Column();
+  if ( materialId >= 0 ) {
+    if ( textureId >= 0 )
+      scene->addObject3D( column, materialId, textureId );
+    else
+      scene->addObject3D( column, materialId );
+  } else {
+    scene->addObject3D( column );
+  }
+
+}
 
 void SceneManager::updateViewportDimensions( float viewportWidth, float viewportHeight ) {
 

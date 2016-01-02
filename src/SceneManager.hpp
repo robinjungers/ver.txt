@@ -39,6 +39,7 @@ class SceneManager {
     void loadSphereFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadTerrainFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadTesseractFromFileLine( Scene * scene, istringstream &lineStream );
+    void loadColumnFromFileLine( Scene * scene, std::istringstream &lineStream );
 
   public:
     SceneManager();
