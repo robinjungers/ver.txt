@@ -138,24 +138,31 @@ void Scene::draw() {
 
   m_camera->moveOnPath();
 
-  m_MVMatrix = m_camera->getViewMatrix();
-  m_NormalMatrix = transpose( inverse( m_MVMatrix ) );
-
-  glUniformMatrix4fv( m_uMVPMatrix, 1, GL_FALSE, value_ptr( m_ProjMatrix * m_MVMatrix ) );
-  glUniformMatrix4fv( m_uMVMatrix, 1, GL_FALSE, value_ptr( m_MVMatrix ) );
-  glUniformMatrix4fv( m_uNormalMatrix, 1, GL_FALSE, value_ptr( m_NormalMatrix ) );
-
-
   int nbLights = m_lights.size();
-
   Light::sendUniformNumber( nbLights );
 
-  for ( unsigned i = 0; ( i < nbLights ) && ( i < MAX_LIGHTS ); ++i )
-    m_lights[i]->sendUniformValues( m_MVMatrix, i );
+  for ( unsigned i = 0; i < m_objects3D.size(); ++i ) {
 
+    mat4 MVMatrix = m_camera->getViewMatrix();
 
-  for ( unsigned i = 0; i < m_objects3D.size(); ++i )
+    MVMatrix = scale( MVMatrix, m_objects3D[i]->getScale() );
+    MVMatrix = rotate( MVMatrix, m_objects3D[i]->getRotation().x, vec3( 1, 0, 0 ) );
+    MVMatrix = rotate( MVMatrix, m_objects3D[i]->getRotation().y, vec3( 0, 1, 0 ) );
+    MVMatrix = rotate( MVMatrix, m_objects3D[i]->getRotation().z, vec3( 0, 0, 1 ) );
+    MVMatrix = translate( MVMatrix, m_objects3D[i]->getPosition() );
+
+    mat4 normalMatrix = transpose( inverse( MVMatrix ) );
+
+    glUniformMatrix4fv( m_uMVPMatrix, 1, GL_FALSE, value_ptr( m_ProjMatrix * MVMatrix ) );
+    glUniformMatrix4fv( m_uMVMatrix, 1, GL_FALSE, value_ptr( MVMatrix ) );
+    glUniformMatrix4fv( m_uNormalMatrix, 1, GL_FALSE, value_ptr( normalMatrix ) );
+
+    for ( unsigned i = 0; ( i < nbLights ) && ( i < MAX_LIGHTS ); ++i )
+      m_lights[i]->sendUniformValues( MVMatrix, i );
+
     m_objects3D[i]->draw();
+
+  }
 
 }
 

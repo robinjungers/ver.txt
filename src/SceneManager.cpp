@@ -152,9 +152,15 @@ void SceneManager::loadTextureFromFileLine( Scene * scene, istringstream &lineSt
 void SceneManager::loadSphereFromFileLine( Scene * scene, istringstream &lineStream ) {
 
   int materialId, textureId;
-  lineStream >> materialId >> textureId;
+  vec3 position, rotation, scale;
+  lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
 
   Sphere * sphere = new Sphere();
+
+  sphere->setPosition( position );
+  sphere->setRotation( rotation );
+  sphere->setScale( scale );
+
   if ( materialId >= 0 ) {
     if ( textureId >= 0 )
       scene->addObject3D( sphere, materialId, textureId );
@@ -169,9 +175,15 @@ void SceneManager::loadSphereFromFileLine( Scene * scene, istringstream &lineStr
 void SceneManager::loadTerrainFromFileLine( Scene * scene, istringstream &lineStream ) {
 
   int materialId, textureId;
-  lineStream >> materialId >> textureId;
+  vec3 position, rotation, scale;
+  lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
 
   Terrain * terrain = new Terrain();
+  
+  terrain->setPosition( position );
+  terrain->setRotation( rotation );
+  terrain->setScale( scale );
+
   if ( materialId >= 0 ) {
     if ( textureId >= 0 )
       scene->addObject3D( terrain, materialId, textureId );
@@ -186,9 +198,15 @@ void SceneManager::loadTerrainFromFileLine( Scene * scene, istringstream &lineSt
 void SceneManager::loadTesseractFromFileLine( Scene * scene, istringstream &lineStream ) {
 
   int materialId, textureId;
-  lineStream >> materialId >> textureId;
+  vec3 position, rotation, scale;
+  lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
 
   Tesseract * tesseract = new Tesseract();
+
+  tesseract->setPosition( position );
+  tesseract->setRotation( rotation );
+  tesseract->setScale( scale );
+
   if ( materialId >= 0 ) {
     if ( textureId >= 0 )
       scene->addObject3D( tesseract, materialId, textureId );
@@ -202,9 +220,15 @@ void SceneManager::loadTesseractFromFileLine( Scene * scene, istringstream &line
 void SceneManager::loadColumnFromFileLine( Scene * scene, std::istringstream &lineStream ){
   
   int materialId, textureId;
-  lineStream >> materialId >> textureId;
+  vec3 position, rotation, scale;
+  lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
 
   Column * column = new Column();
+
+  column->setPosition( position );
+  column->setRotation( rotation );
+  column->setScale( scale );
+
   if ( materialId >= 0 ) {
     if ( textureId >= 0 )
       scene->addObject3D( column, materialId, textureId );

@@ -11,7 +11,7 @@ using namespace glm;
 Object3D::Object3D() {
   m_position = vec3( 0.0, 0.0, 0.0 );
   m_rotation = vec3( 0.0, 0.0, 0.0 );
-  m_scale = vec3( 0.0, 0.0, 0.0 );
+  m_scale = vec3( 1.0, 1.0, 1.0 );
   m_morphingParameter = 0.0;
   m_fadingParameter = 1.0;
   m_currentMorphingParameter = 0.0;

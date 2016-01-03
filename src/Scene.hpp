@@ -25,8 +25,6 @@ class Scene {
     GLint m_uNormalMatrix;
 
     glm::mat4 m_ProjMatrix;
-    glm::mat4 m_MVMatrix;
-    glm::mat4 m_NormalMatrix;
 
     std::vector<Object3D*> m_objects3D;
     std::vector<Light*> m_lights;

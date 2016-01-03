@@ -2,7 +2,7 @@
 
 #include "Object3D.hpp"
 
-class Column: public Object3D {
+class Column: public Solid {
 
    public:
 	Column();

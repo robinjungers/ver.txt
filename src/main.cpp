@@ -56,7 +56,7 @@ int main( int argc, char** argv ) {
   // Init sceneManager
   FilePath applicationPath( argv[0] );
   SceneManager sceneManager;
-  sceneManager.loadSceneFromFile( applicationPath, "ver.test.txt", inputManager, viewportWidth, viewportHeight );
+  sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager, viewportWidth, viewportHeight );
 
 
   // Display loop
