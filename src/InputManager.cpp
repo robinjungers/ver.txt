@@ -14,12 +14,7 @@ GLint InputManager::m_uMVPMatrix = 0;
 
 InputManager::InputManager( float viewportWidth, float viewportHeight ) : m_fontTexture( "font.png" ) {
 
-  #ifdef __APPLE__
-    m_inputValue = "VER.TXT";
-  #else
-    m_inputValue = "ver.txt";
-  #endif
-
+  m_inputValue = "VER.TXT";
   m_index = 0;
 
   // Initialise bitmap font
