@@ -7,11 +7,7 @@
 
 const unsigned maxLetters = 12;
 
-#ifdef __APPLE__
-  const unsigned asciiLettersOffset = 65;
-#else
-  const unsigned asciiLettersOffset = 'a';
-#endif
+const unsigned asciiLettersOffset = 'A';
 
 class InputManager {
 

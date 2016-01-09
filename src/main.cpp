@@ -79,6 +79,7 @@ int main( int argc, char** argv ) {
 
         else if ( e.type == SDL_WINDOWEVENT ) {
           if ( e.window.event == SDL_WINDOWEVENT_RESIZED ) {
+            glViewport(0, 0, e.window.data1, e.window.data2);
             sceneManager.updateViewportDimensions( e.window.data1, e.window.data2 );
             inputManager.updateViewportDimensions( e.window.data1, e.window.data2 );
           }
@@ -87,6 +88,8 @@ int main( int argc, char** argv ) {
       #else
 
         else if ( e.type == SDL_VIDEORESIZE ) {
+          SDL_SetVideoMode(e.resize.w, e.resize.h, 32, SDL_OPENGL | SDL_RESIZABLE);
+          glViewport(0, 0, e.resize.w, e.resize.h);
           sceneManager.updateViewportDimensions( e.resize.w, e.resize.h );
           inputManager.updateViewportDimensions( e.resize.w, e.resize.h );
         }

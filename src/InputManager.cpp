@@ -19,7 +19,7 @@ InputManager::InputManager( float viewportWidth, float viewportHeight ) : m_font
   #else
     m_inputValue = "ver.txt";
   #endif
-    
+
   m_index = 0;
 
   // Initialise bitmap font
@@ -46,8 +46,8 @@ void InputManager::updateViewportDimensions( float viewportWidth, float viewport
 
 void InputManager::addToInput( char c ) {
 
-  if ( c >= 'A' && c <= 'Z' )
-    c = c - 'A' + asciiLettersOffset;
+  if ( c >= 'a' && c <= 'z' )
+    c = c - 'a' + asciiLettersOffset;
 
   if ( m_inputValue.size() < maxLetters )
     m_inputValue += c;

@@ -12,7 +12,7 @@
 #else
 	#include <glimac/SDLWindowManager.hpp>
 #endif
-#include <glimac/filePath.hpp>
+#include <glimac/FilePath.hpp>
 #include "Scene.hpp"
 #include "InputManager.hpp"
 

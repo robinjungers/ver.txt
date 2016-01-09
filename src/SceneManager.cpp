@@ -179,7 +179,7 @@ void SceneManager::loadTerrainFromFileLine( Scene * scene, istringstream &lineSt
   lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
 
   Terrain * terrain = new Terrain();
-  
+
   terrain->setPosition( position );
   terrain->setRotation( rotation );
   terrain->setScale( scale );
@@ -218,7 +218,7 @@ void SceneManager::loadTesseractFromFileLine( Scene * scene, istringstream &line
 }
 
 void SceneManager::loadColumnFromFileLine( Scene * scene, std::istringstream &lineStream ){
-  
+
   int materialId, textureId;
   vec3 position, rotation, scale;
   lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
@@ -241,8 +241,6 @@ void SceneManager::loadColumnFromFileLine( Scene * scene, std::istringstream &li
 }
 
 void SceneManager::updateViewportDimensions( float viewportWidth, float viewportHeight ) {
-
-  glViewport(0, 0, viewportWidth, viewportHeight);
 
   for ( unsigned i = 0; i < m_scenes.size(); ++i )
     m_scenes[i]->setViewportDimensions( viewportWidth, viewportHeight );
