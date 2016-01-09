@@ -49,14 +49,13 @@ int main( int argc, char** argv ) {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
   // Init inputManager
   InputManager inputManager( viewportWidth, viewportHeight );
 
   // Init sceneManager
   FilePath applicationPath( argv[0] );
   SceneManager sceneManager;
-  sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager, viewportWidth, viewportHeight );
+  sceneManager.loadSceneFromFile( applicationPath, "ver.2.txt", inputManager, viewportWidth, viewportHeight );
 
 
   // Display loop
