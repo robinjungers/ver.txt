@@ -10,6 +10,7 @@
 #include "FreeFlyCamera.hpp"
 #include "Column.hpp"
 #include "Organic.hpp"
+#include "Quad.hpp"
 #include "SkyBox.hpp"
 #include "tools.hpp"
 
@@ -98,6 +99,10 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
     // Ajout organic
     else if ( lineHead == "ORGANIC:" )
       loadOrganicFromFileLine( scene, lineStream );
+
+    // Ajout quad
+    else if ( lineHead == "QUAD:" )
+      loadQuadFromFileLine( scene, lineStream );
 
     // Ajout SkyBox
     else if ( lineHead == "SKYBOX:" )
@@ -274,6 +279,28 @@ void SceneManager::loadOrganicFromFileLine( Scene * scene, istringstream &lineSt
       scene->addObject3D( organic, materialId );
   } else
     scene->addObject3D( organic );
+
+}
+
+void SceneManager::loadQuadFromFileLine( Scene * scene, istringstream &lineStream ) {
+
+  int materialId, textureId;
+  vec3 position, rotation, scale;
+  lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
+
+  Quad * quad = new Quad();
+
+  quad->setPosition( position );
+  quad->setRotation( rotation );
+  quad->setScale( scale );
+
+  if ( materialId >= 0 ) {
+    if ( textureId >= 0 )
+      scene->addObject3D( quad, materialId, textureId );
+    else
+      scene->addObject3D( quad, materialId );
+  } else
+    scene->addObject3D( quad );
 
 }
 

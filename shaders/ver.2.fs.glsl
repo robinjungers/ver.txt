@@ -26,12 +26,11 @@ uniform bool uIsLine;
 
 vec3 blinnPhong() {
 
-	vec3 fragmentColor = vec3(0);
+	vec3 fragmentColor = vec3( 0 );
 
-	vec3 diffuse = texture(uTexture, vTexCoords).rgb * uKd;
-	vec3 vNormalNorm = normalize(vNormal);
+	vec3 diffuse = texture( uTexture, vTexCoords ).rgb * uKd;
+	vec3 vNormalNorm = normalize( vNormal );
 	vec3 w_zero = normalize( -vPosition );
-
 
 	for ( int i = 0; i < uNbLights; ++i ) {
 
@@ -51,12 +50,17 @@ vec3 blinnPhong() {
 
 		}
 
-		vec3 halfVector = (w_zero + w_i) / 2;
+		vec3 halfVector = ( w_zero + w_i ) / 2;
 
-	    fragmentColor += L_i * ( diffuse * ( dot(w_i, vNormalNorm ) ) + uKs * ( pow( dot(halfVector, vNormalNorm), uShininess ) ) );
+	  vec3 tempColor = L_i * ( diffuse * ( dot( w_i, vNormalNorm ) ) + uKs * ( pow( dot( halfVector, vNormalNorm ), uShininess ) ) );
+
+	  if ( tempColor.r < 0 ) tempColor.r = 0;
+	  if ( tempColor.g < 0 ) tempColor.g = 0;
+	  if ( tempColor.b < 0 ) tempColor.b = 0;
+
+	  fragmentColor += tempColor;
 
 	}
-
 
 	return fragmentColor;
 }
@@ -78,9 +82,9 @@ void main() {
 		fColor = vec4(1);
 	else if ( !uCastsLight )
 		fColor = texture(uTexture, vTexCoords);
-	else
+	else {
 		fColor = vec4(blinnPhong(), 1);
-
-  fColor.xyz = mix( vec3(1.0, 1.0, 1.0), fColor.xyz, fog( 0.02 ) );
+		fColor.xyz = mix( vec3( 0.97 ), fColor.xyz, fog( 0.02 ) );
+	}
 
 }

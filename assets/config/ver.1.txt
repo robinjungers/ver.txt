@@ -1,4 +1,4 @@
-SCENE:            TERRAIN shaders/ver.1.vs.glsl shaders/ver.1.fs.glsl 1 1 1 
+SCENE:            TERRAIN shaders/ver.1.vs.glsl shaders/ver.1.fs.glsl
 TRACKBALLCAMERA:  500 120.0   70.0 60.0 0.0   10.0 10.0 180.0   70.0 60.0 360.0
 LIGHT:            0.0 -1.0 0.0 0.0 20.0 20.0 20.0
 MATERIAL:         0.05 0.05 0.05 0.1 0.1 0.1 10000000.0
@@ -6,4 +6,4 @@ TEXTURE:          blizzard.png
 TEXTURE:          terrain4.png
 SKYBOX:           0 0 0 0 0 0 0 0 1 -1 1
 TERRAIN:          0 1 0 -1 0 0 0 0 1 1 1
-//TESSERACT:				-1 -1 0 0 0 0 0 45 8 8 8
+TESSERACT:				-1 -1 0 0 0 0 0 45 8 8 8

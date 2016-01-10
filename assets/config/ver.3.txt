@@ -1,6 +1,9 @@
 SCENE:            ORGANIC shaders/ver.3.vs.glsl shaders/ver.3.fs.glsl 0 0 0
-TRACKBALLCAMERA:  500 70   30 -60 0   20 60 180   30 -60 360
-LIGHT:            1 0 0 0 10 10 10
+FREEFLYCAMERA:    500 90.0   0 70 -20 0 -60   0 0 60 90 30   80 20 0 270 0   0 70 -20 360 -60   0 0 60 270 30   80 20 0 90 0   0 70 -20 0 -60
+LIGHT:            1 0 0 0 4 6 10
+LIGHT:            0 5 0 1 10000 10000 10000
 MATERIAL:         0.05 0.05 0.05 0.1 0.1 0.1 10000000
 TEXTURE:          organic.jpg
+TEXTURE:          nightsky2.png
+SKYBOX:           0 1 0 0 0 0 0 0 1 -1 1
 ORGANIC:					0 0 0 0 0 0 0 0 5 5 5

@@ -6,6 +6,7 @@ class Tesseract : public Object3D {
 
   private:
 		static GLint m_uIsLine;
+		float m_rotate;
 
     void buildVertices();
 
@@ -14,7 +15,6 @@ class Tesseract : public Object3D {
 
     static void getUniformLocations( Program &program );
 
-  	void transition();
     void animation();
 
     void draw();

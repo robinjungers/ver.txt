@@ -65,6 +65,16 @@ vec3 blinnPhong() {
 	return fragmentColor + 2 * diffuse;
 }
 
+float fog( float density ) {
+
+  const float LOG2 = 1.442695;
+  float z = vPosition.z;
+  float fogFactor = exp2( -density * density * z * z * LOG2 );
+
+  return clamp(fogFactor, 0.0, 1.0);
+
+}
+
 
 void main() {
 
@@ -72,8 +82,9 @@ void main() {
 		fColor = vec4(1);
 	else if ( !uCastsLight )
 		fColor = texture(uTexture, vTexCoords);
-	else
+	else {
 		fColor = vec4( blinnPhong(), 1 );
-
+		fColor.xyz = mix( vec3(0.0, 0.05, 0.1), fColor.xyz, fog( 0.02 ) );
+	}
 
 }

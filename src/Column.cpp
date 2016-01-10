@@ -20,11 +20,9 @@ void Column::buildVertices() {
 
   PerlinNoise pn;
   PerlinNoise pn2;
-    m_vertices.clear();
+  m_vertices.clear();
 
-    buildSol();
-
-    float n(0);
+  float n(0);
 
   for ( unsigned i = 0; i <= m_terrainLong; ++i ) {
     for ( unsigned j = 0; j <= m_terrainLat; ++j ) {
@@ -436,51 +434,6 @@ void Column::buildSingleColumn(float x, float height, float z){
 
     m_vertices.push_back(vertex);
 
-}
-
-void Column::buildSol() {
-
-    vec3 normalDessus = vec3(0.0,1.0,0.0);
-
-    ShapeVertex vertex;
-    float w = m_width/2;
-    float h = m_height/2;
-
-    vertex.position = vec3(-w, 0.0, h);
-    vertex.normal = normalDessus;
-    vertex.texCoords = vec2(0.0, 1.0);
-
-    m_vertices.push_back(vertex);
-
-    vertex.position = vec3(-w, 0.0, -h);
-    vertex.normal = normalDessus;
-    vertex.texCoords = vec2(0.0, 0.0);
-
-    m_vertices.push_back(vertex);
-
-    vertex.position = vec3(w, 0.0, h);
-    vertex.normal = normalDessus;
-    vertex.texCoords = vec2(1.0, 1.0);
-
-    m_vertices.push_back(vertex);
-
-    vertex.position = vec3(w, 0.0, h);
-    vertex.normal = normalDessus;
-    vertex.texCoords = vec2(1.0, 1.0);
-
-    m_vertices.push_back(vertex);
-
-    vertex.position = vec3(w, 0.0, -h);
-    vertex.normal = normalDessus;
-    vertex.texCoords = vec2(1.0, 0.0);
-
-    m_vertices.push_back(vertex);
-
-    vertex.position = vec3(-w, 0.0, -h);
-    vertex.normal = normalDessus;
-    vertex.texCoords = vec2(0.0, 0.0);
-
-    m_vertices.push_back(vertex);
 }
 
 void Column::animation() {

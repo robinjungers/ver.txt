@@ -46,6 +46,7 @@ class SceneManager {
     void loadTesseractFromFileLine( Scene * scene, istringstream &lineStream );
     void loadColumnFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadOrganicFromFileLine( Scene * scene, std::istringstream &lineStream );
+    void loadQuadFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadSkyBoxFromFileLine( Scene * scene, std::istringstream &lineStream );
 
   public:

@@ -6,6 +6,7 @@ using namespace glm;
 GLint Tesseract::m_uIsLine = 0;
 
 Tesseract::Tesseract() {
+	m_rotate = 0;
 	buildVertices();
 	initVertices();
 }
@@ -17,6 +18,7 @@ void Tesseract::getUniformLocations( Program &program ) {
 void Tesseract::buildVertices() {
 
 	ShapeVertex vertex;
+	m_vertices.clear();
 
 	vertex.normal = vec3( 0.0, 0.0, 0.0 );
 	vertex.texCoords = vec2( 0.0, 0.0 );
@@ -218,17 +220,29 @@ void Tesseract::buildVertices() {
 	m_vertices.push_back(vertex);
 
 
-}
+	mat4 rotateXW( 1.0 );
+	rotateXW[0].x = cos( m_rotate );
+	rotateXW[0].w = -sin( m_rotate );
+	rotateXW[3].x = sin( m_rotate );
+	rotateXW[3].w = cos( m_rotate );
 
-void Tesseract::transition() {
+	mat4 rotateYW( 1.0 );
+	rotateYW[1].y = cos( m_rotate );
+	rotateYW[1].w = sin( m_rotate );
+	rotateYW[3].y = -sin( m_rotate );
+	rotateYW[3].w = cos( m_rotate );
 
-
+	for ( unsigned i = 0; i < m_vertices.size(); ++i )
+		m_vertices[i].position = vec3( rotateXW * rotateYW * vec4( m_vertices[i].position, 1.0 ) );
 
 }
 
 void Tesseract::animation() {
 
+	m_rotate += 0.01;
 
+	buildVertices();
+	reInitVertices();
 
 }
 

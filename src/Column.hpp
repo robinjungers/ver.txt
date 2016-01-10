@@ -14,10 +14,7 @@ class Column: public Solid {
 	Column();
 
 	void buildVertices();
-
 	void buildSingleColumn(float x, float height, float z);
-
-  void buildSol();
 
 	void animation();
 
