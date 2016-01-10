@@ -18,7 +18,7 @@ class Column: public Solid {
 	void buildSingleColumn(float x, float height, float z);
 
   void buildSol();
-    
+
 	void animation();
 
 };

@@ -6,6 +6,7 @@ using namespace glimac;
 using namespace glm;
 
 Letter::Letter( unsigned char index ) : m_index( index ) {
+	m_castsLight = false;
 	buildVertices();
 	initVertices();
 }

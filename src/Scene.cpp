@@ -16,7 +16,6 @@ m_defaultTexture( "default.png" ) {
   m_name = name;
 
   m_program = loadProgram( vsPath, fsPath );
-  m_program.use();
 
   m_uMVPMatrix = glGetUniformLocation( m_program.getGLId(), "uMVPMatrix" );
   m_uMVMatrix = glGetUniformLocation( m_program.getGLId(), "uMVMatrix" );
@@ -29,14 +28,14 @@ m_defaultTexture( "default.png" ) {
   Tesseract::getUniformLocations( m_program );
 
   setViewportDimensions( viewportWidth, viewportHeight );
-  
-  cout << endl << "Creating scene called : '" << m_name << "'" << endl;
+
+  cout << "Creating scene called : '" << m_name << "'\n";
 
 }
 
 Scene::~Scene() {
 
-  cout << endl << "Deleting scene called : '" << m_name << "'" << endl;
+  cout << "Deleting scene called : '" << m_name << "'\n";
 
   delete m_camera;
 
@@ -120,6 +119,12 @@ void Scene::addTexture( string fileTexture ) {
 
 
 // Displayer
+void Scene::use() {
+
+  m_program.use();
+
+}
+
 bool Scene::update() {
   bool isUpdating = true;
   for ( unsigned i = 0; i < m_objects3D.size(); ++i ) {
@@ -145,7 +150,7 @@ void Scene::draw() {
 
     mat4 MVMatrix = m_camera->getViewMatrix();
 
-    MVMatrix = scale( MVMatrix, m_objects3D[i]->getScale() );
+    MVMatrix = scale( MVMatrix, m_objects3D[i]->getScale() * m_objects3D[i]->getFading() );
     MVMatrix = rotate( MVMatrix, m_objects3D[i]->getRotation().x, vec3( 1, 0, 0 ) );
     MVMatrix = rotate( MVMatrix, m_objects3D[i]->getRotation().y, vec3( 0, 1, 0 ) );
     MVMatrix = rotate( MVMatrix, m_objects3D[i]->getRotation().z, vec3( 0, 0, 1 ) );

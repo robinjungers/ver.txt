@@ -1,7 +1,5 @@
 #include "SceneManager.hpp"
 
-#include <glimac/glm.hpp>
-
 #include "Sphere.hpp"
 #include "Terrain.hpp"
 #include "Tesseract.hpp"
@@ -11,6 +9,8 @@
 #include "TrackballCamera.hpp"
 #include "FreeFlyCamera.hpp"
 #include "Column.hpp"
+#include "SkyBox.hpp"
+#include "tools.hpp"
 
 using namespace std;
 using namespace glm;
@@ -18,7 +18,9 @@ using namespace glm;
 SceneManager::SceneManager() {
 
   m_currentScene = 0;
-  m_state = SCENE_TRANSITION;
+  m_incomingScene = 0;
+  m_state = SCENE_FADEIN;
+  m_clearColor = vec4( 1.0, 1.0, 1.0, 1.0 );
 
 }
 
@@ -89,6 +91,10 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
     // Ajout column
     else if ( lineHead == "COLUMN:" )
       loadColumnFromFileLine( scene, lineStream );
+
+    // Ajout SkyBox
+    else if ( lineHead == "SKYBOX:" )
+      loadSkyBoxFromFileLine( scene, lineStream );
 
   }
 
@@ -240,6 +246,29 @@ void SceneManager::loadColumnFromFileLine( Scene * scene, std::istringstream &li
 
 }
 
+void SceneManager::loadSkyBoxFromFileLine( Scene * scene, std::istringstream &lineStream ){
+
+  int materialId, textureId;
+  vec3 position, rotation, scale;
+  lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
+
+  SkyBox * skyBox = new SkyBox();
+
+  skyBox->setPosition( position );
+  skyBox->setRotation( rotation );
+  skyBox->setScale( scale );
+
+  if ( materialId >= 0 ) {
+    if ( textureId >= 0 )
+      scene->addObject3D( skyBox, materialId, textureId );
+    else
+      scene->addObject3D( skyBox, materialId );
+  } else {
+    scene->addObject3D( skyBox );
+  }
+
+}
+
 void SceneManager::updateViewportDimensions( float viewportWidth, float viewportHeight ) {
 
   for ( unsigned i = 0; i < m_scenes.size(); ++i )
@@ -247,23 +276,27 @@ void SceneManager::updateViewportDimensions( float viewportWidth, float viewport
 
 }
 
-void SceneManager::setCurrentScene( unsigned index ) {
+void SceneManager::switchToScene( unsigned index ) {
 
-  m_currentScene = index;
+  m_incomingScene = index;
 
+}
+
+bool SceneManager::isAvailable() {
+  return (m_state == SCENE_ANIMATION) ? true: false;
 }
 
 
 void SceneManager::fadeIn() {
-  m_state = SCENE_TRANSITION;
+  m_state = SCENE_FADEIN;
   m_scenes[ m_currentScene ]->triggerFadeIn();
 }
 void SceneManager::fadeOut() {
-  m_state = SCENE_TRANSITION;
+  m_state = SCENE_FADEOUT;
   m_scenes[ m_currentScene ]->triggerFadeOut();
 }
 void SceneManager::morphing( float parameter ) {
-  m_state = SCENE_TRANSITION;
+  m_state = SCENE_MORPHING;
   m_scenes[ m_currentScene ]->triggerMorphing( parameter );
 }
 
@@ -271,22 +304,31 @@ void SceneManager::morphing( float parameter ) {
 
 void SceneManager::draw() {
 
-  m_scenes[ m_currentScene ]->setAmbientColor( vec3( 1.0, 1.0, 1.0 ) );
-
-  if ( m_state == SCENE_TRANSITION ) {
-    bool isUpdating = m_scenes[ m_currentScene ]->update();
-    if ( !isUpdating )
-      m_state = SCENE_ANIMATION;
-  } else {
+  if ( m_state == SCENE_ANIMATION ) {
     m_scenes[ m_currentScene ]->animate();
+  } else {
+
+    bool isUpdating = m_scenes[ m_currentScene ]->update();
+
+    if ( !isUpdating ) {
+      if ( m_state == SCENE_FADEOUT) {
+        m_currentScene = m_incomingScene;
+        m_state = SCENE_FADEIN;
+        m_scenes[ m_currentScene ]->triggerFadeIn();
+      } else {
+        m_state = SCENE_ANIMATION;
+      }
+    }
   }
 
+  m_scenes[ m_currentScene ]->use();
   m_scenes[ m_currentScene ]->draw();
 
 }
 
 void SceneManager::clear() {
 
-  m_scenes[ m_currentScene ]->clear();
+  glClearColor( m_clearColor.x, m_clearColor.y, m_clearColor.z, 1.0 );
+  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 }

@@ -13,10 +13,12 @@ class Object3D {
     Texture * m_texture;
     GLuint m_vbo;
     GLuint m_vao;
+    bool m_castsLight;
 
     glm::vec3 m_position;
     glm::vec3 m_rotation;
     glm::vec3 m_scale;
+    bool m_isRescalable;
 
     float m_morphingParameter;
     float m_fadingParameter;
@@ -46,6 +48,7 @@ class Object3D {
     glm::vec3 getPosition();
     glm::vec3 getRotation();
     glm::vec3 getScale();
+    float getFading();
 
     bool transition();
     virtual void animation() = 0;

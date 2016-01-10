@@ -46,7 +46,7 @@ void Sphere::buildVertices() {
       vertex.normal.y = sinTheta;
       vertex.normal.z = cos(i * dPhi) * cosTheta;
 
-      vertex.position = m_r * vertex.normal;
+      vertex.position = m_r * m_currentFadingParameter * vertex.normal;
 
       data.push_back(vertex);
     }

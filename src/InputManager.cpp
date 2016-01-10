@@ -9,7 +9,6 @@
 
 using namespace glm;
 
-GLint InputManager::m_uIsText = 0;
 GLint InputManager::m_uMVPMatrix = 0;
 
 InputManager::InputManager( float viewportWidth, float viewportHeight ) : m_fontTexture( "font.png" ) {
@@ -36,7 +35,6 @@ InputManager::InputManager( float viewportWidth, float viewportHeight ) : m_font
 }
 
 void InputManager::getUniformLocations( Program &program ) {
-  m_uIsText = glGetUniformLocation( program.getGLId(), "uIsText" );
   m_uMVPMatrix = glGetUniformLocation( program.getGLId(), "uMVPMatrix" );
 }
 
@@ -112,8 +110,6 @@ bool InputManager::validate() {
 
 void InputManager::display() {
 
-  glUniform1i(m_uIsText, true);
-
   unsigned nbLetters = m_inputValue.size();
 
   glm::mat4 MVPMatrix = translate( m_MVPMatrix, vec3( -( nbLetters * 0.5 ), 0.5, 0.0 ) );
@@ -132,8 +128,6 @@ void InputManager::display() {
     MVPMatrix = translate( MVPMatrix, vec3( 1.0, 0.0, 0.0 ) );
 
   }
-
-  glUniform1i(m_uIsText, false);
 
 }
 

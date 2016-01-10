@@ -9,10 +9,10 @@ using namespace glimac;
 using namespace glm;
 
 Terrain::Terrain() {
-	m_width = 100;
-	m_height = 100;
-	m_terrainLong = 50;
-	m_terrainLat = 50;
+	m_width = 200;
+	m_height = 200;
+	m_terrainLong = 100;
+	m_terrainLat = 100;
 	buildVertices();
 	initVertices();
 }
@@ -37,7 +37,7 @@ void Terrain::buildVertices() {
       float x = map( i, 0, m_terrainLong, -m_width/2, m_width/2 );
 			float z = map( j, 0, m_terrainLat, -m_height/2, m_height/2 );
 			float distToCenter = x*x + z*z;
-			float y = 0.01 * m_currentFadingParameter * distToCenter * pn.noise( 0.1 * x, 0.1 * z, m_currentMorphingParameter ) - 10.0;
+			float y = 0.004 * m_currentFadingParameter * distToCenter * pn.noise( 1.1 * x, 1.1 * z, m_currentMorphingParameter ) - 10.0;
 
       ShapeVertex vertex;
 

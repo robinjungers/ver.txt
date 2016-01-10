@@ -12,10 +12,12 @@ Object3D::Object3D() {
   m_position = vec3( 0.0, 0.0, 0.0 );
   m_rotation = vec3( 0.0, 0.0, 0.0 );
   m_scale = vec3( 1.0, 1.0, 1.0 );
+  m_isRescalable = true;
   m_morphingParameter = 0.0;
   m_fadingParameter = 1.0;
   m_currentMorphingParameter = 0.0;
   m_currentFadingParameter = 0.0;
+  m_castsLight = true;
 }
 
 void Object3D::initVertices() {
@@ -74,6 +76,7 @@ void Object3D::setScale( vec3 scale ) {
 }
 void Object3D::setMaterial( Material * material ) {
   m_material = material;
+  m_material->setLightCasting( m_castsLight );
 }
 void Object3D::setTexture( Texture * texture ) {
   m_texture = texture;
@@ -97,17 +100,28 @@ vec3 Object3D::getRotation() {
 vec3 Object3D::getScale() {
   return m_scale;
 }
-
+float Object3D::getFading() {
+  return m_isRescalable ? m_currentFadingParameter : 1;
+}
 
 
 bool Object3D::transition() {
 
   float step = 0.01;
+  bool fadingDone = false, morphingDone = false;
 
-  if ( (fabs(m_morphingParameter - m_currentMorphingParameter) < step ) && (fabs(m_fadingParameter - m_currentFadingParameter) < step ) ) return false;
+  if ( fabs(m_morphingParameter - m_currentMorphingParameter) < step )
+    morphingDone = true;
+  else
+    ease( m_currentMorphingParameter, m_morphingParameter, step );
 
-	ease( m_currentFadingParameter, m_fadingParameter, 0.01 );
-	ease( m_currentMorphingParameter, m_morphingParameter, 0.01 );
+
+  if ( fabs(m_fadingParameter - m_currentFadingParameter) < step )
+    fadingDone = true;
+  else
+    ease( m_currentFadingParameter, m_fadingParameter, step );
+
+  if ( fadingDone && morphingDone ) return false;
 
   buildVertices();
 	initVertices();
@@ -126,6 +140,7 @@ void Solid::draw() {
   m_texture->bindTexture();
 
   // Uniforms
+  m_material->setLightCasting( m_castsLight );
   m_material->sendUniformValues();
 
   // Drawing

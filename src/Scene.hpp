@@ -59,6 +59,7 @@ class Scene {
     void triggerFadeOut();
     void triggerMorphing( float parameter );
 
+    void use();
     bool update();
     void animate();
     void draw();

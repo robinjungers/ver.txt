@@ -59,6 +59,7 @@ int main( int argc, char** argv ) {
   // Init sceneManager
   FilePath applicationPath( argv[0] );
   SceneManager sceneManager;
+  sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager, viewportWidth, viewportHeight );
   sceneManager.loadSceneFromFile( applicationPath, "ver.2.txt", inputManager, viewportWidth, viewportHeight );
 
 
@@ -114,8 +115,10 @@ int main( int argc, char** argv ) {
             break;
 
           case SDLK_RETURN:
-            if ( inputManager.validate() )
+            if ( inputManager.validate() ) {
               sceneManager.fadeOut();
+              sceneManager.switchToScene( inputManager.getIndex() );
+            }
             else
               sceneManager.morphing( inputManager.getInputValueHash() );
             break;
@@ -126,7 +129,7 @@ int main( int argc, char** argv ) {
 
         }
 
-        if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) ) {
+        if ( ( keyPressed >= SDLK_a ) && ( keyPressed < SDLK_z ) && sceneManager.isAvailable() ) {
           #ifdef __APPLE__
             string keyValue = SDL_GetKeyName( keyPressed );
             inputManager.addToInput( keyValue[0] );

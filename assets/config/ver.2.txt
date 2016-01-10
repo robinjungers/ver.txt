@@ -1,7 +1,9 @@
-SCENE:            TESTSCENE shaders/default.vs.glsl shaders/default.fs.glsl
-TRACKBALLCAMERA:  500 70.0 60.0 0.0 1.0 10.0 180.0 70.0 60.0 360.0
+SCENE:            BASALT shaders/default.vs.glsl shaders/default.fs.glsl
+FREEFLYCAMERA:    500   -30.0 20.0 -50.0 0.0 0.0    20.0 20.0 30.0 180.0 -30.0    -40.0 30.0 0.0 100.0 -30.0    -30.0 20.0 -50.0 0.0 0.0 
 LIGHT:            0.0 -1.0 -1.0 0.0 20.0 20.0 20.0
-LIGHT:            1.0 -0.5 1.0 0.0 30.0 30.0 30.0
+LIGHT:            1.0 -0.5 1.0 0.0 10.0 10.0 10.0
 MATERIAL:         0.05 0.05 0.05 0.1 0.1 0.1 10000000.0
 TEXTURE:          basalt.jpg
+TEXTURE:          daysky2.png
+SKYBOX:           0 1 0 0 0 0 0 0 1 -1 1
 COLUMN:           0 0 0 0 0 0 0 0 1 1 1

@@ -20,7 +20,7 @@ uniform struct Light {
    vec3 intensity;
 } uLights[MAX_LIGHTS];
 
-uniform bool uIsText;
+uniform bool uCastsLight;
 uniform bool uIsLine;
 
 
@@ -64,10 +64,10 @@ vec3 blinnPhong() {
 
 void main() {
 
-	if ( uIsText )
-		fColor = texture(uTexture, vTexCoords);
-	else if ( uIsLine )
+  if ( uIsLine )
 		fColor = vec4(1);
+	else if ( !uCastsLight )
+		fColor = texture(uTexture, vTexCoords);
 	else
 		fColor = vec4(blinnPhong(), 1);
 

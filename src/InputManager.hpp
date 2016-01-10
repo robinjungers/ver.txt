@@ -21,7 +21,6 @@ class InputManager {
     glm::mat4 m_MVPMatrix;
 
     static GLint m_uMVPMatrix;
-    static GLint m_uIsText;
     Texture m_fontTexture;
 
   public:
