@@ -105,8 +105,9 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
 void SceneManager::loadTrackballCameraFromFileLine( Scene * scene, istringstream &lineStream ) {
 
   unsigned cameraTime;
-  lineStream >> cameraTime;
-  TrackballCamera * camera = new TrackballCamera( cameraTime );
+  float cameraAngle;
+  lineStream >> cameraTime >> cameraAngle;
+  TrackballCamera * camera = new TrackballCamera( cameraTime, cameraAngle );
 
   float x, y, z;
   while ( lineStream >> x >> y >> z )
@@ -119,8 +120,9 @@ void SceneManager::loadTrackballCameraFromFileLine( Scene * scene, istringstream
 void SceneManager::loadFreeFlyCameraFromFileLine( Scene * scene, istringstream &lineStream ) {
 
   unsigned cameraTime;
-  lineStream >> cameraTime;
-  FreeFlyCamera * camera = new FreeFlyCamera( cameraTime );
+  float cameraAngle;
+  lineStream >> cameraTime >> cameraAngle;
+  FreeFlyCamera * camera = new FreeFlyCamera( cameraTime, cameraAngle );
 
   float x, y, z, phi, theta;
   while ( lineStream >> x >> y >> z >> phi >> theta)

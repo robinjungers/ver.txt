@@ -30,6 +30,7 @@ class Object3D {
 
     virtual void buildVertices() = 0;
     void initVertices();
+    void reInitVertices();
 
   public:
     Object3D();

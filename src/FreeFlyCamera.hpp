@@ -27,7 +27,7 @@ private:
 
 public:
 	FreeFlyCamera();
-	FreeFlyCamera( unsigned nbFramesPerSegment );
+	FreeFlyCamera( unsigned nbFramesPerSegment, float angle );
 	~FreeFlyCamera() {};
 
 	void addControlPoint( FreeFlyPosition controlPoint );

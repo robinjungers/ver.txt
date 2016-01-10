@@ -71,4 +71,5 @@ void main() {
 	else
 		fColor = vec4(blinnPhong(), 1);
 
+
 }

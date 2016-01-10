@@ -63,6 +63,16 @@ void Object3D::initVertices() {
 
 }
 
+void Object3D::reInitVertices() {
+
+  glBindBuffer( GL_ARRAY_BUFFER, m_vbo );
+
+  glBufferSubData( GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof( ShapeVertex ), m_vertices.data() );
+
+  glBindBuffer( GL_ARRAY_BUFFER, 0 );
+
+}
+
 
 
 void Object3D::setPosition( vec3 position ) {
@@ -107,7 +117,7 @@ float Object3D::getFading() {
 
 bool Object3D::transition() {
 
-  float step = 0.01;
+  float step = 0.05;
   bool fadingDone = false, morphingDone = false;
 
   if ( fabs(m_morphingParameter - m_currentMorphingParameter) < step )
@@ -124,7 +134,7 @@ bool Object3D::transition() {
   if ( fadingDone && morphingDone ) return false;
 
   buildVertices();
-	initVertices();
+	reInitVertices();
 
 	return true;
 

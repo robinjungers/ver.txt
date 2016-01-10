@@ -61,6 +61,7 @@ int main( int argc, char** argv ) {
   SceneManager sceneManager;
   sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager, viewportWidth, viewportHeight );
   sceneManager.loadSceneFromFile( applicationPath, "ver.2.txt", inputManager, viewportWidth, viewportHeight );
+  sceneManager.updateViewportDimensions( viewportWidth, viewportHeight );
 
 
   // Display loop

@@ -23,7 +23,7 @@ private:
 
 public:
 	TrackballCamera();
-	TrackballCamera( unsigned nbFramesPerSegment );
+	TrackballCamera( unsigned nbFramesPerSegment, float angle );
 	~TrackballCamera() {};
 
 	void addControlPoint( TrackballPosition controlPoint );

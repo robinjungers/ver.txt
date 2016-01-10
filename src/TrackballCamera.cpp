@@ -14,9 +14,11 @@ TrackballCamera::TrackballCamera() {
     m_currentFrame = 0;
     m_currentSegment = 0;
 
+    m_angle = 70.0;
+
 }
 
-TrackballCamera::TrackballCamera( unsigned nbFramesPerSegment ) {
+TrackballCamera::TrackballCamera( unsigned nbFramesPerSegment, float angle ) {
 
     m_currentPosition.distance = 5.0;
     m_currentPosition.angleX = 0.0;
@@ -25,6 +27,8 @@ TrackballCamera::TrackballCamera( unsigned nbFramesPerSegment ) {
     m_nbFramesPerSegment = nbFramesPerSegment;
     m_currentFrame = 0;
     m_currentSegment = 0;
+
+    m_angle = angle;
 
 }
 

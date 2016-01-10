@@ -27,7 +27,7 @@ m_defaultTexture( "default.png" ) {
   InputManager::getUniformLocations( m_program );
   Tesseract::getUniformLocations( m_program );
 
-  setViewportDimensions( viewportWidth, viewportHeight );
+  //setViewportDimensions( viewportWidth, viewportHeight );
 
   cout << "Creating scene called : '" << m_name << "'\n";
 
@@ -51,7 +51,7 @@ Scene::~Scene() {
 // Setter
 void Scene::setViewportDimensions( float viewportWidth, float viewportHeight ) {
 
-  m_ProjMatrix = perspective( radians( 70.f ), viewportWidth / viewportHeight, 0.1f, 1000.f );
+  m_ProjMatrix = perspective( radians( (float) m_camera->getAngle() ), viewportWidth / viewportHeight, 0.1f, 1000.f );
 
 }
 

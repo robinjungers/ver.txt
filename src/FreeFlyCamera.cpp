@@ -13,9 +13,11 @@ FreeFlyCamera::FreeFlyCamera() {
 	m_currentFrame = 0;
 	m_currentSegment = 0;
 
+	m_angle = 70.0;
+
 }
 
-FreeFlyCamera::FreeFlyCamera( unsigned nbFramesPerSegment ) {
+FreeFlyCamera::FreeFlyCamera( unsigned nbFramesPerSegment, float angle ) {
 
 	m_currentPosition.position = vec3( 0.0f );;
 	m_currentPosition.phi = 90;
@@ -24,6 +26,8 @@ FreeFlyCamera::FreeFlyCamera( unsigned nbFramesPerSegment ) {
 	m_nbFramesPerSegment = nbFramesPerSegment;
 	m_currentFrame = 0;
 	m_currentSegment = 0;
+
+	m_angle = angle;
 
 }
 
