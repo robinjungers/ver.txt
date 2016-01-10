@@ -34,10 +34,12 @@ class Scene {
     Material m_defaultMaterial;
     Texture m_defaultTexture;
 
+    glm::vec3 m_ambientColor;
+
     Camera * m_camera;
 
   public:
-    Scene( string name, FilePath vsPath, FilePath fsPath, float viewportWidth, float viewportHeight );
+    Scene( string name, FilePath vsPath, FilePath fsPath );
     ~Scene();
 
     void setViewportDimensions( float viewportWidth, float viewportHeight );

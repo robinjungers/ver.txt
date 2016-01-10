@@ -9,6 +9,7 @@
 #include "TrackballCamera.hpp"
 #include "FreeFlyCamera.hpp"
 #include "Column.hpp"
+#include "Organic.hpp"
 #include "SkyBox.hpp"
 #include "tools.hpp"
 
@@ -32,7 +33,7 @@ SceneManager::~SceneManager() {
 }
 
 
-void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputManager &inputManager, float viewportWidth, float viewportHeight ) {
+void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputManager &inputManager ) {
 
   Scene * scene;
 
@@ -50,8 +51,10 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
     if ( lineHead == "SCENE:" ) {
 
       string sceneName, vsPath, fsPath;
-      lineStream >> sceneName >> vsPath >> fsPath;
-      scene = new Scene( sceneName, srcPath.dirPath() + vsPath, srcPath.dirPath() + fsPath, viewportWidth, viewportHeight );
+      vec3 ambientColor;
+      lineStream >> sceneName >> vsPath >> fsPath >> ambientColor.r >> ambientColor.g >> ambientColor.b;
+      scene = new Scene( sceneName, srcPath.dirPath() + vsPath, srcPath.dirPath() + fsPath );
+      scene->setAmbientColor( ambientColor );
       inputManager.addEntry( sceneName );
 
     }
@@ -91,6 +94,10 @@ void SceneManager::loadSceneFromFile( FilePath srcPath, string filePath, InputMa
     // Ajout column
     else if ( lineHead == "COLUMN:" )
       loadColumnFromFileLine( scene, lineStream );
+
+    // Ajout organic
+    else if ( lineHead == "ORGANIC:" )
+      loadOrganicFromFileLine( scene, lineStream );
 
     // Ajout SkyBox
     else if ( lineHead == "SKYBOX:" )
@@ -248,6 +255,28 @@ void SceneManager::loadColumnFromFileLine( Scene * scene, std::istringstream &li
 
 }
 
+void SceneManager::loadOrganicFromFileLine( Scene * scene, istringstream &lineStream ) {
+
+  int materialId, textureId;
+  vec3 position, rotation, scale;
+  lineStream >> materialId >> textureId >> position.x >> position.y >> position.z >> rotation.x >> rotation.y >> rotation.z >> scale.x >> scale.y >> scale.z;
+
+  Organic * organic = new Organic();
+
+  organic->setPosition( position );
+  organic->setRotation( rotation );
+  organic->setScale( scale );
+
+  if ( materialId >= 0 ) {
+    if ( textureId >= 0 )
+      scene->addObject3D( organic, materialId, textureId );
+    else
+      scene->addObject3D( organic, materialId );
+  } else
+    scene->addObject3D( organic );
+
+}
+
 void SceneManager::loadSkyBoxFromFileLine( Scene * scene, std::istringstream &lineStream ){
 
   int materialId, textureId;
@@ -270,6 +299,7 @@ void SceneManager::loadSkyBoxFromFileLine( Scene * scene, std::istringstream &li
   }
 
 }
+
 
 void SceneManager::updateViewportDimensions( float viewportWidth, float viewportHeight ) {
 
@@ -309,7 +339,6 @@ void SceneManager::draw() {
   if ( m_state == SCENE_ANIMATION ) {
     m_scenes[ m_currentScene ]->animate();
   } else {
-
     bool isUpdating = m_scenes[ m_currentScene ]->update();
 
     if ( !isUpdating ) {
@@ -329,8 +358,5 @@ void SceneManager::draw() {
 }
 
 void SceneManager::clear() {
-
-  glClearColor( m_clearColor.x, m_clearColor.y, m_clearColor.z, 1.0 );
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
+  m_scenes[ m_currentScene ]->clear();
 }

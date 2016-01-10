@@ -45,12 +45,13 @@ class SceneManager {
     void loadTerrainFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadTesseractFromFileLine( Scene * scene, istringstream &lineStream );
     void loadColumnFromFileLine( Scene * scene, std::istringstream &lineStream );
+    void loadOrganicFromFileLine( Scene * scene, std::istringstream &lineStream );
     void loadSkyBoxFromFileLine( Scene * scene, std::istringstream &lineStream );
 
   public:
     SceneManager();
     ~SceneManager();
-    void loadSceneFromFile( FilePath srcPath, std::string filePath, InputManager &inputManager, float viewportWidth, float viewportHeight );
+    void loadSceneFromFile( FilePath srcPath, std::string filePath, InputManager &inputManager );
 
     void updateViewportDimensions( float viewportWidth, float viewportHeight );
     void switchToScene( unsigned index );

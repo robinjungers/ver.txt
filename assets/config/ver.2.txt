@@ -1,4 +1,4 @@
-SCENE:            BASALT shaders/ver.2.vs.glsl shaders/ver.2.fs.glsl
+SCENE:            BASALT shaders/ver.2.vs.glsl shaders/ver.2.fs.glsl 1 1 1
 FREEFLYCAMERA:    500 70.0    -30.0 20.0 -50.0 0.0 0.0    20.0 20.0 30.0 180.0 -30.0    -40.0 30.0 0.0 100.0 -30.0    -30.0 20.0 -50.0 0.0 0.0
 LIGHT:            0.0 -1.0 -1.0 0.0 20.0 20.0 20.0
 LIGHT:            1.0 -0.5 1.0 0.0 10.0 10.0 10.0

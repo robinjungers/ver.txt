@@ -2,7 +2,6 @@
 
 #include "Object3D.hpp"
 
-
 class Terrain : public Solid {
 
   private:

@@ -9,7 +9,7 @@ using namespace glimac;
 using namespace glm;
 
 
-Scene::Scene( string name, FilePath vsPath, FilePath fsPath, float viewportWidth, float viewportHeight )
+Scene::Scene( string name, FilePath vsPath, FilePath fsPath )
 : m_defaultMaterial( vec3( 1.0, 1.0, 1.0 ), vec3( 1.0, 1.0, 1.0 ), 30 ),
 m_defaultTexture( "default.png" ) {
 
@@ -27,9 +27,11 @@ m_defaultTexture( "default.png" ) {
   InputManager::getUniformLocations( m_program );
   Tesseract::getUniformLocations( m_program );
 
-  //setViewportDimensions( viewportWidth, viewportHeight );
-
-  cout << "Creating scene called : '" << m_name << "'\n";
+  m_ambientColor.r = 0;
+  m_ambientColor.g = 0;
+  m_ambientColor.b = 0;
+  
+  cout << endl << "Creating scene called : '" << m_name << "'" << endl;
 
 }
 
@@ -57,7 +59,7 @@ void Scene::setViewportDimensions( float viewportWidth, float viewportHeight ) {
 
 void Scene::setAmbientColor( vec3 color ) {
 
-  glClearColor( color.x, color.y, color.z, 1.0 );
+  m_ambientColor = color;
 
 }
 
@@ -96,7 +98,7 @@ void Scene::addObject3D( Object3D *object, int idMaterial, int idTexture ) {
 
 void Scene::addLight( Light *light ) {
 
-  if ( m_lights.size() == 10 )
+  if ( m_lights.size() == MAX_LIGHTS )
     m_lights.erase(  m_lights.begin() );
 
   m_lights.push_back( light );
@@ -173,6 +175,7 @@ void Scene::draw() {
 
 void Scene::clear() {
 
+  glClearColor( m_ambientColor.r, m_ambientColor.g, m_ambientColor.b, 1.0 );
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 }

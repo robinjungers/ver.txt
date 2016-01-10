@@ -1,13 +1,5 @@
 #include "Sphere.hpp"
 
-#include <vector>
-#include <cmath>
-#include <GL/glew.h>
-#include <glimac/common.hpp>
-#include <glimac/glm.hpp>
-
-using namespace std;
-using namespace glimac;
 using namespace glm;
 
 Sphere::Sphere() {

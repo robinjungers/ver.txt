@@ -25,7 +25,6 @@ class Object3D {
     float m_currentMorphingParameter;
     float m_currentFadingParameter;
 
-  protected:
     std::vector<glimac::ShapeVertex> m_vertices;
 
     virtual void buildVertices() = 0;

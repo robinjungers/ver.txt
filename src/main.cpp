@@ -2,10 +2,6 @@
 
 #include <GL/glew.h>
 
-#include <iostream>
-
-#include <GL/glew.h>
-
 #ifdef __APPLE__
   #include <glimac/SDLAppleWindowManager.hpp>
 #else
@@ -59,8 +55,9 @@ int main( int argc, char** argv ) {
   // Init sceneManager
   FilePath applicationPath( argv[0] );
   SceneManager sceneManager;
-  sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager, viewportWidth, viewportHeight );
-  sceneManager.loadSceneFromFile( applicationPath, "ver.2.txt", inputManager, viewportWidth, viewportHeight );
+  sceneManager.loadSceneFromFile( applicationPath, "ver.1.txt", inputManager );
+  sceneManager.loadSceneFromFile( applicationPath, "ver.2.txt", inputManager );
+  sceneManager.loadSceneFromFile( applicationPath, "ver.3.txt", inputManager );
   sceneManager.updateViewportDimensions( viewportWidth, viewportHeight );
 
 

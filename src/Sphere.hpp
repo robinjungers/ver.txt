@@ -2,8 +2,7 @@
 
 #include "Object3D.hpp"
 
-
-class Sphere: public Solid {
+class Sphere : public Solid {
 
   private:
     GLfloat m_r;

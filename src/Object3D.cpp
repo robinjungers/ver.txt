@@ -29,7 +29,8 @@ void Object3D::initVertices() {
   glBindBuffer( GL_ARRAY_BUFFER, m_vbo );
 
   //Puis on envois les données à la CG
-  glBufferData( GL_ARRAY_BUFFER, m_vertices.size() * sizeof( ShapeVertex ), m_vertices.data(), GL_STATIC_DRAW );
+  glBufferData( GL_ARRAY_BUFFER, m_vertices.size() * sizeof( ShapeVertex ), NULL, GL_STREAM_DRAW );
+  glBufferData( GL_ARRAY_BUFFER, m_vertices.size() * sizeof( ShapeVertex ), m_vertices.data(), GL_STREAM_DRAW );
 
   //Débindind du vbo de la cible pour éviter de le remodifier
   glBindBuffer( GL_ARRAY_BUFFER, 0 );
