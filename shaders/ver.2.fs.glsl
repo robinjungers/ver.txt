@@ -150,15 +150,15 @@ vec3 blinnPhong() {
 
 	  vec3 tempColor = L_i * ( diffuse * ( dot( w_i, vNormalNorm ) ) + uKs * ( pow( dot( halfVector, vNormalNorm ), uShininess ) ) );
 
-	  if ( tempColor.r < 0 ) tempColor.r = 0;
-	  if ( tempColor.g < 0 ) tempColor.g = 0;
-	  if ( tempColor.b < 0 ) tempColor.b = 0;
+    tempColor.r = clamp( tempColor.r, 0.0, 1.0 );
+	  tempColor.g = clamp( tempColor.g, 0.0, 1.0 );
+	  tempColor.b = clamp( tempColor.b, 0.0, 1.0 );
 
 	  fragmentColor += tempColor;
 
 	}
 
-	return fragmentColor;
+	return fragmentColor + 2 * diffuse;
 }
 
 float fog( float density ) {
