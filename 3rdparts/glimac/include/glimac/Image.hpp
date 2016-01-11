@@ -38,8 +38,6 @@ public:
 
 std::unique_ptr<Image> loadImage(const FilePath& filepath);
 
-// void ldImage();
-
 class ImageManager {
 private:
     static std::unordered_map<FilePath, std::unique_ptr<Image>> m_ImageMap;

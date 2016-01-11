@@ -1,0 +1,10 @@
+SCENE:            ORGANIC shaders/ver.3.vs.glsl shaders/ver.3.fs.glsl 0 0 0
+FREEFLYCAMERA:    500 60.0   0 70 -20 0 -60   0 0 60 90 30   80 20 0 270 0   0 70 -20 360 -60   0 0 60 270 30   80 20 0 90 0   0 70 -20 0 -60
+LIGHT:            1 0 0 0 4 6 10
+LIGHT:            0 5 0 1 10000 10000 10000
+MATERIAL:         0.05 0.05 0.05 0.1 0.1 0.1 10000000
+TEXTURE:          organic.jpg
+TEXTURE:          nightsky2.png
+SKYBOX:           0 1 0 0 0 0 0 0 1 -1 1
+ORGANIC:					0 0 0 0 0 0 0 0 5 5 5
+TESSERACT:        -1 -1 0 0 0 20 20 0 200 200 200
