@@ -12,6 +12,7 @@ uniform sampler2D uTexture;
 uniform vec3 uKd;
 uniform vec3 uKs;
 uniform float uShininess;
+uniform float uViewportDimensions;
 
 #define MAX_LIGHTS 10
 uniform int uNbLights;

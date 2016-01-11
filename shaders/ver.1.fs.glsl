@@ -12,6 +12,7 @@ uniform sampler2D uTexture;
 uniform vec3 uKd;
 uniform vec3 uKs;
 uniform float uShininess;
+uniform vec2 uViewportDimensions;
 
 #define MAX_LIGHTS 10
 uniform int uNbLights;
@@ -65,6 +66,11 @@ vec3 blinnPhong() {
 	return fragmentColor + 2 * diffuse;
 }
 
+float map(float value, float inMin, float inMax, float outMin, float outMax) {
+
+	return outMin + (outMax - outMin) * ((value - inMin) / (inMax - inMin));
+  
+}
 
 void main() {
 
@@ -75,5 +81,10 @@ void main() {
 	else
 		fColor = vec4( blinnPhong(), 1 );
 
+  vec2 screenSize = (uViewportDimensions.x == 0) ? vec2( 800.0, 600.0 ) : uViewportDimensions;
+
+  float d = abs(distance( gl_FragCoord.xy, screenSize*0.5 ));
+  float dmax = abs(distance( vec2(0.0), screenSize*0.5 ));
+  fColor.rgb -= 0.015 * exp( 1 * map( d, 0, dmax, 0, 4 ));
 
 }

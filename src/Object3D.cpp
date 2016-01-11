@@ -118,19 +118,19 @@ float Object3D::getFading() {
 
 bool Object3D::transition() {
 
-  float step = 0.05;
+  float stepMorphing = 0.01, stepFading = 0.05;
   bool fadingDone = false, morphingDone = false;
 
-  if ( fabs(m_morphingParameter - m_currentMorphingParameter) < step )
+  if ( fabs(m_morphingParameter - m_currentMorphingParameter) < stepMorphing )
     morphingDone = true;
   else
-    ease( m_currentMorphingParameter, m_morphingParameter, step );
+    ease( m_currentMorphingParameter, m_morphingParameter, stepMorphing );
 
 
-  if ( fabs(m_fadingParameter - m_currentFadingParameter) < step )
+  if ( fabs(m_fadingParameter - m_currentFadingParameter) < stepFading )
     fadingDone = true;
   else
-    ease( m_currentFadingParameter, m_fadingParameter, step );
+    ease( m_currentFadingParameter, m_fadingParameter, stepFading );
 
   if ( fadingDone && morphingDone ) return false;
 

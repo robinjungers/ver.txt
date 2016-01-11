@@ -6,4 +6,3 @@ TEXTURE:          blizzard.png
 TEXTURE:          terrain4.png
 SKYBOX:           0 0 0 0 0 0 0 0 1 -1 1
 TERRAIN:          0 1 0 -1 0 0 0 0 1 1 1
-TESSERACT:				-1 -1 0 0 0 0 0 45 8 8 8

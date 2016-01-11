@@ -27,7 +27,7 @@ void Tesseract::buildVertices() {
 	vertex.position = vec3( -0.5, 0.5, -0.5 ); // arrière externe haut
 	m_vertices.push_back(vertex);
 
-	vertex.position = vec3( 0.5, 0.5, -0.5 ); 
+	vertex.position = vec3( 0.5, 0.5, -0.5 );
 	m_vertices.push_back(vertex);
 
 	vertex.position = vec3( 0.5, 0.5, -0.5 ); // droite externe haut
@@ -51,7 +51,7 @@ void Tesseract::buildVertices() {
 	vertex.position = vec3( -0.5, -0.5, -0.5 ); // arrière externe bas
 	m_vertices.push_back(vertex);
 
-	vertex.position = vec3( 0.5, -0.5, -0.5 ); 
+	vertex.position = vec3( 0.5, -0.5, -0.5 );
 	m_vertices.push_back(vertex);
 
 	vertex.position = vec3( 0.5, -0.5, -0.5 ); // droite externe bas
@@ -100,7 +100,7 @@ void Tesseract::buildVertices() {
 	vertex.position = vec3( -0.3, 0.3, -0.3 ); // arrière interne haut
 	m_vertices.push_back(vertex);
 
-	vertex.position = vec3( 0.3, 0.3, -0.3 ); 
+	vertex.position = vec3( 0.3, 0.3, -0.3 );
 	m_vertices.push_back(vertex);
 
 	vertex.position = vec3( 0.3, 0.3, -0.3 ); // droite interne haut
@@ -124,7 +124,7 @@ void Tesseract::buildVertices() {
 	vertex.position = vec3( -0.3, -0.3, -0.3 ); // arrière interne bas
 	m_vertices.push_back(vertex);
 
-	vertex.position = vec3( 0.3, -0.3, -0.3 ); 
+	vertex.position = vec3( 0.3, -0.3, -0.3 );
 	m_vertices.push_back(vertex);
 
 	vertex.position = vec3( 0.3, -0.3, -0.3 ); // droite interne bas
@@ -239,10 +239,10 @@ void Tesseract::buildVertices() {
 
 void Tesseract::animation() {
 
-	m_rotate += 0.01;
-
-	buildVertices();
-	reInitVertices();
+	// m_rotate += 0.01;
+	//
+	// buildVertices();
+	// reInitVertices();
 
 }
 

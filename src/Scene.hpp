@@ -23,6 +23,7 @@ class Scene {
     GLint m_uMVPMatrix;
     GLint m_uMVMatrix;
     GLint m_uNormalMatrix;
+    GLint m_uViewportDimensions;
 
     glm::mat4 m_ProjMatrix;
 

@@ -20,18 +20,13 @@ m_defaultTexture( "default.png" ) {
   m_uMVPMatrix = glGetUniformLocation( m_program.getGLId(), "uMVPMatrix" );
   m_uMVMatrix = glGetUniformLocation( m_program.getGLId(), "uMVMatrix" );
   m_uNormalMatrix = glGetUniformLocation( m_program.getGLId(), "uNormalMatrix" );
-
-  Light::getUniformLocations( m_program );
-  Material::getUniformLocations( m_program );
-  Texture::getUniformLocations( m_program );
-  InputManager::getUniformLocations( m_program );
-  Tesseract::getUniformLocations( m_program );
+  m_uViewportDimensions = glGetUniformLocation( m_program.getGLId(), "uViewportDimensions" );
 
   m_ambientColor.r = 0;
   m_ambientColor.g = 0;
   m_ambientColor.b = 0;
-  
-  cout << endl << "Creating scene called : '" << m_name << "'" << endl;
+
+  cout << "Creating scene called : '" << m_name << "'\n";
 
 }
 
@@ -54,6 +49,7 @@ Scene::~Scene() {
 void Scene::setViewportDimensions( float viewportWidth, float viewportHeight ) {
 
   m_ProjMatrix = perspective( radians( (float) m_camera->getAngle() ), viewportWidth / viewportHeight, 0.1f, 1000.f );
+  glUniform2f( m_uViewportDimensions, viewportWidth, viewportHeight );
 
 }
 
@@ -124,6 +120,12 @@ void Scene::addTexture( string fileTexture ) {
 void Scene::use() {
 
   m_program.use();
+
+  Light::getUniformLocations( m_program );
+  Material::getUniformLocations( m_program );
+  Texture::getUniformLocations( m_program );
+  InputManager::getUniformLocations( m_program );
+  Tesseract::getUniformLocations( m_program );
 
 }
 

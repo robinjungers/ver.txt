@@ -63,7 +63,6 @@ int main( int argc, char** argv ) {
 
   // Display loop
   bool done = false;
-  float timer = 0.0;
   while( !done ) {
 
     // Used for frame rate cap
@@ -152,7 +151,6 @@ int main( int argc, char** argv ) {
 
 
     // Frame rate cap
-    timer += 0.01;
     Uint32 elapsedTime = SDL_GetTicks() - startTime;
 
     if(elapsedTime < FRAME_DURATION)
